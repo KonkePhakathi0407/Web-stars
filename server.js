@@ -24,7 +24,7 @@ try {
     crisisRoutes = require('./routes/crisis');
     console.log('Crisis routes loaded');
 } catch(e) {
-    console.error(' Failed to load crisis routes:', e.message);
+    console.error('Failed to load crisis routes:', e.message);
     const express = require('express');
     crisisRoutes = express.Router();
     crisisRoutes.post('/', async (req, res) => {
@@ -123,7 +123,7 @@ app.use('/api/settings', protectUser, settingsRoutes);
 app.use('/api/users', protectUser, userRoutes);
 app.use('/api/crisis', crisisRoutes);
 
-// ── DIRECT CRISIS FALLBACK (catches if router fails) ──
+// DIRECT CRISIS FALLBACK (catches if router fails)
 app.post('/api/crisis-direct', async (req, res) => {
     try {
         const { severity, share_details, location, message } = req.body;
@@ -133,10 +133,10 @@ app.post('/api/crisis-direct', async (req, res) => {
             'INSERT INTO crisis_alerts (user_id, location, message, share_details, severity, status) VALUES (?, ?, ?, ?, ?, \'open\')',
             [userId, location||null, message||null, share_details?1:0, safeSeverity]
         );
-        console.log('✅ Direct crisis alert saved, id:', result.insertId);
+        console.log('Direct crisis alert saved, id:', result.insertId);
         res.json({ success: true, message: 'Alert sent. Help is on the way.' });
     } catch(err) {
-        console.error('❌ Direct crisis error:', err.message);
+        console.error('Direct crisis error:', err.message);
         res.status(500).json({ success: false, message: err.message });
     }
 });
@@ -215,10 +215,6 @@ STRICT RULES:
         res.status(500).json({ reply: null });
     }
 });
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ADD THIS BLOCK to your server.js  (paste it right after your /api/ai-chat route)
-// ─────────────────────────────────────────────────────────────────────────────
 
 app.post('/api/ai-insights', async (req, res) => {
     try {
@@ -403,6 +399,338 @@ app.use((err, req, res, next) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
 });
 
+// ========== CREATE TABLES FUNCTION ==========
+const createAllTables = async () => {
+    console.log('\nCreating/Verifying database tables...\n');
+    
+    const tables = [
+        // 1. USERS TABLE
+        `CREATE TABLE IF NOT EXISTS users (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            first_name VARCHAR(100),
+            last_name VARCHAR(100),
+            email VARCHAR(255) UNIQUE NOT NULL,
+            password_hash VARCHAR(255) NOT NULL,
+            university VARCHAR(255),
+            year_of_study VARCHAR(50),
+            profile_picture VARCHAR(500) DEFAULT NULL,
+            role ENUM('student', 'admin', 'counselor') DEFAULT 'student',
+            is_anonymous TINYINT DEFAULT 0,
+            is_active TINYINT DEFAULT 1,
+            last_login TIMESTAMP NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX idx_email (email),
+            INDEX idx_role (role)
+        )`,
+
+        // 2. MOOD LOGS TABLE
+        `CREATE TABLE IF NOT EXISTS mood_logs (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            mood_score INT NOT NULL,
+            mood_label VARCHAR(50),
+            notes TEXT,
+            logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_user_id (user_id),
+            INDEX idx_logged_at (logged_at)
+        )`,
+
+        // 3. JOURNAL ENTRIES TABLE
+        `CREATE TABLE IF NOT EXISTS journal_entries (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            mood VARCHAR(50),
+            content TEXT NOT NULL,
+            word_count INT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_user_id (user_id),
+            INDEX idx_created_at (created_at)
+        )`,
+
+        // 4. JOURNAL SENTIMENT ANALYSIS TABLE
+        `CREATE TABLE IF NOT EXISTS journal_sentiment (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            journal_id INT NOT NULL,
+            sentiment_score INT,
+            tone VARCHAR(50),
+            distress_keywords TEXT,
+            positive_keywords TEXT,
+            needs_intervention TINYINT DEFAULT 0,
+            analyzed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (journal_id) REFERENCES journal_entries(id) ON DELETE CASCADE,
+            UNIQUE KEY unique_journal (journal_id)
+        )`,
+
+        // 5. BOOKINGS TABLE
+        `CREATE TABLE IF NOT EXISTS bookings (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            counsellor_name VARCHAR(255) NOT NULL,
+            campus VARCHAR(100),
+            appointment_date DATE NOT NULL,
+            appointment_time TIME NOT NULL,
+            reason TEXT,
+            student_number VARCHAR(50),
+            status VARCHAR(50) DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_user_id (user_id),
+            INDEX idx_appointment_date (appointment_date),
+            INDEX idx_status (status)
+        )`,
+
+        // 6. FORUM POSTS TABLE
+        `CREATE TABLE IF NOT EXISTS forum_posts (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            content TEXT NOT NULL,
+            excerpt VARCHAR(255),
+            category VARCHAR(100),
+            likes INT DEFAULT 0,
+            is_anon TINYINT DEFAULT 1,
+            is_reported TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_user_id (user_id),
+            INDEX idx_category (category),
+            INDEX idx_created_at (created_at),
+            INDEX idx_is_reported (is_reported)
+        )`,
+
+        // 7. FORUM COMMENTS TABLE
+        `CREATE TABLE IF NOT EXISTS forum_comments (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            post_id INT NOT NULL,
+            user_id INT NOT NULL,
+            content TEXT NOT NULL,
+            is_reported TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_id) REFERENCES forum_posts(id) ON DELETE CASCADE,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_post_id (post_id),
+            INDEX idx_is_reported (is_reported)
+        )`,
+
+        // 8. FORUM LIKES TABLE
+        `CREATE TABLE IF NOT EXISTS forum_likes (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            post_id INT NOT NULL,
+            user_id INT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY unique_like (post_id, user_id),
+            FOREIGN KEY (post_id) REFERENCES forum_posts(id) ON DELETE CASCADE,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )`,
+
+        // 9. USER SETTINGS TABLE
+        `CREATE TABLE IF NOT EXISTS user_settings (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL UNIQUE,
+            theme VARCHAR(20) DEFAULT 'light',
+            notif_email TINYINT DEFAULT 1,
+            notif_push TINYINT DEFAULT 1,
+            notif_forum TINYINT DEFAULT 0,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )`,
+
+        // 10. PASSWORD OTP TABLE
+        `CREATE TABLE IF NOT EXISTS password_otp (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            otp_code VARCHAR(6) NOT NULL,
+            expires_at TIMESTAMP NOT NULL,
+            is_used TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_otp (otp_code),
+            INDEX idx_user (user_id)
+        )`,
+
+        // 11. CRISIS CHATS TABLE
+        `CREATE TABLE IF NOT EXISTS crisis_chats (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            message TEXT,
+            response TEXT,
+            needs_crisis TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )`,
+
+        // 12. CRISIS ALERTS TABLE
+        `CREATE TABLE IF NOT EXISTS crisis_alerts (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT,
+            location VARCHAR(255),
+            message TEXT,
+            share_details TINYINT DEFAULT 0,
+            status VARCHAR(50) DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_status (status),
+            INDEX idx_created_at (created_at)
+        )`,
+
+        // 13. HELP REQUESTS TABLE
+        `CREATE TABLE IF NOT EXISTS help_requests (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT,
+            message TEXT,
+            share_location TINYINT DEFAULT 0,
+            status VARCHAR(50) DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_status (status),
+            INDEX idx_created_at (created_at)
+        )`,
+
+        // 14. REMINDERS TABLE
+        `CREATE TABLE IF NOT EXISTS reminders (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            booking_id INT,
+            reminder_type VARCHAR(50),
+            reminder_time TIMESTAMP,
+            sent TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
+            INDEX idx_reminder_time (reminder_time),
+            INDEX idx_sent (sent)
+        )`,
+
+        // 15. ADMIN ACTIVITY LOG
+        `CREATE TABLE IF NOT EXISTS admin_activity_log (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            admin_id INT NOT NULL,
+            action VARCHAR(255) NOT NULL,
+            target_type VARCHAR(50),
+            target_id INT,
+            details TEXT,
+            ip_address VARCHAR(45),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_admin_id (admin_id),
+            INDEX idx_created_at (created_at),
+            INDEX idx_action (action)
+        )`,
+
+        // 16. REPORTED CONTENT TABLE
+        `CREATE TABLE IF NOT EXISTS reported_content (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            reporter_id INT NOT NULL,
+            content_type VARCHAR(50) NOT NULL,
+            content_id INT NOT NULL,
+            reason VARCHAR(255),
+            status VARCHAR(50) DEFAULT 'pending',
+            reviewed_by INT,
+            reviewed_at TIMESTAMP NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (reporter_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL,
+            INDEX idx_content (content_type, content_id),
+            INDEX idx_status (status)
+        )`,
+
+        // 17. COUNSELLORS TABLE
+        `CREATE TABLE IF NOT EXISTS counsellors (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            specialization VARCHAR(255),
+            bio TEXT,
+            availability TEXT,
+            rating DECIMAL(3,2) DEFAULT 0,
+            total_reviews INT DEFAULT 0,
+            is_active TINYINT DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_is_active (is_active),
+            INDEX idx_rating (rating)
+        )`,
+
+        // 18. CAMPUS LOCATIONS TABLE
+        `CREATE TABLE IF NOT EXISTS campus_locations (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(255) NOT NULL,
+            campus_code VARCHAR(10),
+            address TEXT,
+            latitude DECIMAL(10,8),
+            longitude DECIMAL(11,8),
+            phone VARCHAR(20),
+            email VARCHAR(255),
+            hours TEXT,
+            is_active TINYINT DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )`,
+
+        // 19. MENTAL HEALTH FACILITIES TABLE
+        `CREATE TABLE IF NOT EXISTS mental_health_facilities (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(255) NOT NULL,
+            type ENUM('on-campus', 'off-campus', 'online') DEFAULT 'off-campus',
+            address TEXT,
+            latitude DECIMAL(10,8),
+            longitude DECIMAL(11,8),
+            phone VARCHAR(20),
+            website VARCHAR(255),
+            is_free TINYINT DEFAULT 0,
+            is_online TINYINT DEFAULT 0,
+            is_student_specific TINYINT DEFAULT 0,
+            cost_range VARCHAR(100),
+            hours TEXT,
+            rating DECIMAL(3,2) DEFAULT 0,
+            is_active TINYINT DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_type (type),
+            INDEX idx_is_free (is_free),
+            INDEX idx_is_online (is_online)
+        )`,
+
+        // 20. NOTIFICATIONS TABLE
+        `CREATE TABLE IF NOT EXISTS notifications (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            message TEXT NOT NULL,
+            type VARCHAR(50),
+            is_read TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_user_id (user_id),
+            INDEX idx_is_read (is_read),
+            INDEX idx_created_at (created_at)
+        )`,
+
+        // 21. SYSTEM SETTINGS TABLE
+        `CREATE TABLE IF NOT EXISTS system_settings (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            setting_key VARCHAR(100) UNIQUE NOT NULL,
+            setting_value TEXT,
+            setting_type VARCHAR(50) DEFAULT 'string',
+            description TEXT,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )`
+    ];
+    
+    for (const query of tables) {
+        try {
+            await promisePool.execute(query);
+            console.log('Table created/verified');
+        } catch (error) {
+            console.error('Error creating table:', error.message);
+        }
+    }
+    
+    console.log('\nAll 21 database tables are ready!\n');
+};
+
 // ========== START SERVER ==========
 async function startServer() {
     console.log('\n========================================');
@@ -411,20 +739,23 @@ async function startServer() {
     
     await testConnection();
     
+    // Create all tables automatically
+    await createAllTables();
+    
     // Create uploads folder if it doesn't exist
     if (!fs.existsSync('./uploads')) {
         fs.mkdirSync('./uploads', { recursive: true });
-        console.log('✅ Created uploads folder');
+        console.log('Created uploads folder');
     }
     
     app.listen(PORT, '0.0.0.0', () => {
-        console.log(`\n🚀 Unified Server is running!`);
-        console.log(`📍 URL: http://localhost:${PORT}`);
+        console.log(`\nUnified Server is running!`);
+        console.log(`URL: http://localhost:${PORT}`);
         
-        console.log('\n🤖 AI Endpoints:');
+        console.log('\nAI Endpoints:');
         console.log(`   POST   /api/ai-chat           - AI chat companion`);
         
-        console.log('\n📋 User Endpoints:');
+        console.log('\nUser Endpoints:');
         console.log(`   POST   /api/auth/signup       - Create account`);
         console.log(`   POST   /api/auth/signin       - User login`);
         console.log(`   GET    /api/mood              - Get mood logs`);
@@ -437,7 +768,7 @@ async function startServer() {
         console.log(`   POST   /api/forum             - Create forum post`);
         console.log(`   POST   /api/crisis            - Submit crisis alert`);
         
-        console.log('\n👑 Admin Endpoints:');
+        console.log('\nAdmin Endpoints:');
         console.log(`   POST   /api/admin/auth/login  - Admin login`);
         console.log(`   GET    /api/admin/auth/me     - Get current admin`);
         console.log(`   POST   /api/admin/auth/signup - Create admin account`);
@@ -451,7 +782,7 @@ async function startServer() {
         console.log(`   GET    /api/admin/settings    - Platform settings`);
         console.log(`   GET    /api/admin/analytics   - Analytics data`);
         
-        console.log('\n🌐 Frontend URLs:');
+        console.log('\nFrontend URLs:');
         console.log(`   User Portal:     http://localhost:${PORT}/signin.html`);
         console.log(`   Admin Landing:   http://localhost:${PORT}/admin-landing`);
         console.log(`   Admin Sign In:   http://localhost:${PORT}/admin/signim.html`);
@@ -461,7 +792,7 @@ async function startServer() {
         console.log(`   Analytics:       http://localhost:${PORT}/admin/analytics.html`);
         console.log(`   Admin Settings:  http://localhost:${PORT}/admin/settings.html`);
         
-        console.log('\n✅ Ready for testing!');
+        console.log('\nReady for testing!');
         console.log('========================================\n');
     });
 }
