@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindCare Hub – Student Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <script src="utils/theme.js"></script>
+    <style>
+      /* ── Mood check-in ─────────────────────────────────── */
+      .mood-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.25rem;
+        padding: 2rem;
+      }
+
+      .mood-card-left {
+        max-width: 520px;
+      }
+
+.mood-cta-btn {
+  display: inline-block;
+  padding: 0.6rem 1.75rem;
+  background:  #470f68;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s ease;
+}
+
+      .mood-cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 14px rgba(104, 102, 234, 0.35);
+      }
+
+      /* ── Mood logged confirmation ──────────────────────── */
+      .mood-confirm {
+        display: none;
+        align-items: center;
+        gap: 0.5rem;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #059669;
+        margin-top: 0.25rem;
+      }
+
+      .mood-confirm.visible {
+        display: flex;
+      }
+
+      /* ── Forum ─────────────────────────────────────────── */
+      .forum-item-link {
+        text-decoration: none;
+        cursor: pointer;
+        display: block;
+      }
+
+      .forum-item-link:hover .forum-q {
+        color: #667eea;
+      }
+
+      .forum-item-link:hover {
+        background: #f9fafb;
+        border-radius: 8px;
+      }
+
+      /* ── Deadlines ─────────────────────────────────────── */
+      .deadline-item {
+        padding: 1rem;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+        background: white;
+        border: 1px solid #e5e7eb;
+        position: relative;
+      }
+
+      .deadline-item:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border-color: #667eea;
+      }
+
+      .deadline-item.urgent {
+        border-left: 4px solid #ef4444;
+        background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+      }
+
+      .deadline-item.warning {
+        border-left: 4px solid #f59e0b;
+        background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+      }
+
+      .deadline-item.normal {
+        border-left: 4px solid #10b981;
+        background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      }
+
+      .deadline-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .deadline-title {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #1f2937;
+      }
+
+      .deadline-badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 100px;
+        font-weight: 600;
+      }
+
+      .deadline-badge.urgent  { background: #fee2e2; color: #dc2626; }
+      .deadline-badge.warning { background: #fed7aa; color: #ea580c; }
+      .deadline-badge.normal  { background: #d1fae5; color: #059669; }
+
+      .deadline-course {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .deadline-date {
+        font-size: 0.7rem;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .deadline-days-left {
+        font-size: 0.7rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .deadline-days-left.urgent  { color: #dc2626; }
+      .deadline-days-left.warning { color: #ea580c; }
+      .deadline-days-left.normal  { color: #059669; }
+
+      .delete-deadline {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 6px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        color: #9ca3af;
+      }
+
+      .deadline-item:hover .delete-deadline { opacity: 1; }
+
+      .delete-deadline:hover {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+
+      .add-deadline-link {
+        display: block;
+        text-align: center;
+        margin-top: 1rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #e5e7eb;
+        color: #667eea;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .add-deadline-link:hover { color: #5b3ec8; }
+
+      /* ── Deadline modal ────────────────────────────────── */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.active { display: flex; }
+
+      .modal {
+        background: white;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        padding: 1.5rem;
+        box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+        animation: modalSlideIn 0.3s ease;
+      }
+
+      @keyframes modalSlideIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1f2937;
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #9ca3af;
+        padding: 0.25rem;
+        line-height: 1;
+      }
+
+      .modal-close:hover { color: #1f2937; }
+
+      .form-group { margin-bottom: 1rem; }
+
+      .form-group label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #4b5563;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.85rem;
+        transition: border-color 0.2s ease;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .modal-btn {
+        flex: 1;
+        padding: 0.6rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: 'DM Sans', sans-serif;
+      }
+
+      .modal-btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+      }
+
+      .modal-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      .modal-btn-secondary {
+        background: white;
+        color: #6b7280;
+        border: 1px solid #e5e7eb;
+      }
+
+      .modal-btn-secondary:hover { background: #f9fafb; }
+
+      /* ── Empty states ──────────────────────────────────── */
+      .empty-state {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: #9ca3af;
+      }
+
+      .empty-state svg {
+        margin-bottom: 0.75rem;
+        opacity: 0.4;
+      }
+
+      .empty-state p {
+        font-size: 0.85rem;
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      /* ── Appointments ──────────────────────────────────── */
+      .appt-empty {
+        text-align: center;
+        padding: 1.25rem 0 0.5rem;
+        color: #9ca3af;
+        font-size: 0.82rem;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">MindCare Hub</div>
+        <div class="brand-sub">Academic Support</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="mood.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+          Mood Tracker and AI
+        </a>
+        <a href="journal.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          Journal
+        </a>
+        <a href="findhelp.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+          </svg>
+          Find Help
+        </a>
+        <a href="crisis.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          Crisis Centre
+        </a>
+        <a href="bookings.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Bookings
+        </a>
+        <a href="forum.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          Forum
+        </a>
+        <a href="games.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="8" width="20" height="10" rx="3" />
+            <line x1="7" y1="11" x2="7" y2="15" /><line x1="5" y1="13" x2="9" y2="13" />
+            <circle cx="15" cy="12" r="0.8" fill="currentColor" /><circle cx="17" cy="14" r="0.8" fill="currentColor" />
+          </svg>
+          Games
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+          </svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="logout.html" class="sidebar-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="greeting" id="greetingText">Good day</h1>
+          <p class="date" id="currentDate">Thursday, October 24th, 2024</p>
+        </div>
+        <div class="topbar-right">
+          <div class="lang-selector">English (UK)</div>
+          <button class="notif-btn" id="notifBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+          </button>
+          <a href="settings.html" class="user-avatar-link">
+            <div class="user-avatar" id="userAvatar">
+              <img id="profileImage" src="" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:none;">
+              <svg id="defaultAvatar" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2" style="display:block;">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+          </a>
+        </div>
+      </header>
+
+      <!-- MOOD CHECK-IN CARD -->
+      <div class="mood-card">
+        <div class="mood-card-left">
+          <h2 class="mood-title">How are you feeling today?</h2>
+          <p class="mood-sub">Your daily check-in helps us personalise your experience and track your wellbeing over time.</p>
+        </div>
+        <a href="mood.html" class="mood-cta-btn">Log your mood</a>
+        <div class="mood-confirm" id="moodConfirm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Mood logged successfully
+        </div>
+      </div>
+
+      <!-- STATS ROW — 3 cards, no Badges -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Journal Streak</div>
+          <div class="stat-value"><span id="journalStreak">0</span> <span class="stat-unit">Days</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Mood Score</div>
+          <div class="stat-value"><span id="moodScore">-</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Upcoming</div>
+          <div class="stat-value"><span id="upcomingCount">0</span> <span class="stat-unit">Sessions</span></div>
+        </div>
+      </div>
+
+      <!-- CONTENT GRID -->
+      <div class="content-grid">
+        <div class="col-left">
+
+          <!-- Recent Journal Entries -->
+          <div class="widget">
+            <div class="widget-header">
+              <h3 class="widget-title">Recent Journal Entries</h3>
+              <a href="journal.html" class="widget-action">New Entry</a>
+            </div>
+            <div id="recentJournalEntries">
+              <p style="color:#9ca3af;">Loading journal entries...</p>
+            </div>
+          </div>
+
+          <!-- Personal AI Insights -->
+          <div class="widget">
+            <h3 class="widget-title">Personal AI Insights</h3>
+            <div class="insights-grid">
+              <div class="insight-card pink">
+                <div class="insight-type">Stress Trigger</div>
+                <div class="insight-text">Late night caffeine correlates with higher anxiety scores the next morning.</div>
+              </div>
+              <div class="insight-card yellow">
+                <div class="insight-type">Progress Note</div>
+                <div class="insight-text">Your sleep duration has increased by 15% since starting the journal streak.</div>
+              </div>
+              <div class="insight-card green">
+                <div class="insight-type">Daily Tip</div>
+                <div class="insight-text">Try a 2-minute box breathing session before your next lecture.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom row -->
+          <div class="bottom-row">
+
+            <!-- Upcoming Appointments -->
+            <div class="widget">
+              <h3 class="widget-title">Upcoming Appointments</h3>
+              <div id="appointmentArea">
+                <!-- Populated by dashboard.js -->
+                <div class="appt-empty">Loading appointments...</div>
+              </div>
+              <a href="bookings.html" class="add-deadline-link" style="margin-top:0.75rem;">+ Book a session</a>
+            </div>
+
+            <!-- Community Forum -->
+            <div class="widget">
+              <h3 class="widget-title">Community Forum</h3>
+              <div id="forumList">
+                <!-- Populated by dashboard.js from API -->
+                <div class="empty-state">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                  <p>No forum posts yet.<br>Be the first to start a conversation.</p>
+                </div>
+              </div>
+              <a href="forum.html" class="add-deadline-link" style="margin-top:0.75rem;">+ Start a discussion</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-right">
+          <!-- Upcoming Deadlines -->
+          <div class="widget">
+            <h3 class="widget-title">Upcoming Deadlines</h3>
+            <div id="deadlinesList"></div>
+            <div class="add-deadline-link" id="addDeadlineBtn">+ Add New Deadline</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Deadline modal -->
+    <div class="modal-overlay" id="deadlineModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Add New Deadline</h3>
+          <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <form id="deadlineForm">
+          <div class="form-group">
+            <label>Assignment / Project Name *</label>
+            <input type="text" id="deadlineTitle" required placeholder="e.g., Research Paper, Final Exam">
+          </div>
+          <div class="form-group">
+            <label>Course Name *</label>
+            <input type="text" id="deadlineCourse" required placeholder="e.g., PSYC 301 – Research Methods">
+          </div>
+          <div class="form-group">
+            <label>Due Date *</label>
+            <input type="date" id="deadlineDate" required>
+          </div>
+          <div class="modal-buttons">
+            <button type="button" class="modal-btn modal-btn-secondary" id="cancelModalBtn">Cancel</button>
+            <button type="submit" class="modal-btn modal-btn-primary">Add Deadline</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="javascript/dashboard.js"></script>
+    <script src="javascript/api.js"></script>
+
+    <script>
+      // ── Date ───────────────────────────────────────────────────────────────
+      const dateEl = document.getElementById('currentDate');
+      if (dateEl) {
+        dateEl.textContent = new Date().toLocaleDateString('en-GB', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+      }
+
+      // ── Greeting ───────────────────────────────────────────────────────────
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      if (currentUser) {
+        const greetingEl = document.getElementById('greetingText');
+        const hour = new Date().getHours();
+        let greeting = 'Good day';
+        if (hour < 12) greeting = 'Good morning';
+        else if (hour < 17) greeting = 'Good afternoon';
+        else greeting = 'Good evening';
+        if (greetingEl) greetingEl.textContent = `${greeting}, ${currentUser.first_name || currentUser.email?.split('@')[0]}`;
+      }
+
+      const API = window.API_BASE_URL || 'http://localhost:3000/api';
+
+      // ── Mood icon selector + API log ───────────────────────────────────────
+      document.querySelectorAll('.mood-icon-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+          document.querySelectorAll('.mood-icon-btn').forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+
+          const moodScore = parseInt(this.dataset.score);
+          const moodLabel = this.dataset.label;
+
+          try {
+            const res  = await fetch(`${API}/mood`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({ mood_score: moodScore, mood_label: moodLabel })
+            });
+            const data = await res.json();
+            if (data.success) {
+              const confirm = document.getElementById('moodConfirm');
+              if (confirm) {
+                confirm.classList.add('visible');
+                setTimeout(() => confirm.classList.remove('visible'), 3000);
+              }
+              // Refresh mood score stat
+              loadMoodStats(API);
+            }
+          } catch (err) {
+            console.error('Error logging mood:', err);
+          }
+        });
+      });
+
+      // ── Mood stats ─────────────────────────────────────────────────────────
+      fetch(`${API}/mood/stats`, { credentials: 'include' })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success && data.stats) {
+            const el = document.getElementById('moodScore');
+            if (el) el.textContent = data.stats.average ? data.stats.average.toFixed(1) : '-';
+          }
+        })
+        .catch(() => {});
+
+      // ── Journal entries ────────────────────────────────────────────────────
+      fetch(`${API}/journal`, { credentials: 'include' })
+        .then(r => r.json())
+        .then(data => {
+          if (!data.success) return;
+          const streakEl = document.getElementById('journalStreak');
+          if (streakEl) streakEl.textContent = data.entries?.length || 0;
+
+          const container = document.getElementById('recentJournalEntries');
+          if (!container) return;
+
+          if (!data.entries || data.entries.length === 0) {
+            container.innerHTML = '<p style="color:#9ca3af;font-size:0.85rem;">No journal entries yet. <a href="journal.html" style="color:#667eea;">Write your first entry.</a></p>';
+            return;
+          }
+
+          container.innerHTML = data.entries.slice(0, 2).map(entry => `
+            <div class="journal-entry">
+              <div class="entry-meta">${new Date(entry.created_at).toLocaleDateString('en-GB', { day:'numeric', month:'short' }).toUpperCase()}</div>
+              <div class="entry-title">${(entry.excerpt || '').split(' ').slice(0, 6).join(' ')}…</div>
+              <div class="entry-preview">${entry.excerpt || ''}</div>
+            </div>
+          `).join('');
+        })
+        .catch(() => {});
+
+      // ── Upcoming bookings ──────────────────────────────────────────────────
+      fetch(`${API}/bookings?status=pending`, { credentials: 'include' })
+        .then(r => r.json())
+        .then(data => {
+          const countEl = document.getElementById('upcomingCount');
+          if (countEl) countEl.textContent = data.bookings?.length || 0;
+
+          const area = document.getElementById('appointmentArea');
+          if (!area) return;
+
+          if (!data.success || !data.bookings || data.bookings.length === 0) {
+            area.innerHTML = `<div class="appt-empty">No upcoming appointments.</div>`;
+            return;
+          }
+
+          const next     = data.bookings[0];
+          const apptDate = new Date(next.appointment_date);
+          const month    = apptDate.toLocaleString('en', { month: 'short' }).toUpperCase();
+          const day      = apptDate.getDate();
+
+          area.innerHTML = `
+            <div class="appointment-card">
+              <div class="appt-date">
+                <div class="appt-month">${month}</div>
+                <div class="appt-day">${day}</div>
+              </div>
+              <div class="appt-info">
+                <div class="appt-name">${escapeHtml(next.counsellor_name || 'Counsellor')}</div>
+                <div class="appt-role">${next.campus ? next.campus.toUpperCase() + ' Campus' : 'Online'}</div>
+                <div class="appt-time">• ${next.appointment_time || ''}</div>
+              </div>
+              ${next.meeting_link
+                ? `<button class="appt-video" onclick="window.open('${next.meeting_link}','_blank')" title="Join session">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+                    </svg>
+                  </button>`
+                : ''}
+            </div>
+            ${data.bookings.length > 1
+              ? `<p style="font-size:0.75rem;color:#6b7280;margin-top:0.5rem;text-align:center;">+${data.bookings.length - 1} more upcoming</p>`
+              : ''}
+          `;
+        })
+        .catch(() => {
+          const area = document.getElementById('appointmentArea');
+          if (area) area.innerHTML = `<div class="appt-empty">Could not load appointments.</div>`;
+        });
+
+      // ── Forum posts ────────────────────────────────────────────────────────
+      fetch(`${API}/forum/posts?limit=3`, { credentials: 'include' })
+        .then(r => r.json())
+        .then(data => {
+          const list = document.getElementById('forumList');
+          if (!list) return;
+
+          if (!data.success || !data.posts || data.posts.length === 0) return; // keep empty state
+
+          list.innerHTML = data.posts.map((post, i) => `
+            ${i > 0 ? '<div class="forum-divider"></div>' : ''}
+            <a href="forum.html" class="forum-item-link">
+              <div class="forum-item">
+                <div class="forum-q">${escapeHtml(post.title)}</div>
+                ${post.is_hot ? '<span class="forum-tag hot">Hot</span>' : ''}
+                <div class="forum-meta">${post.reply_count || 0} repl${post.reply_count === 1 ? 'y' : 'ies'} • ${timeAgo(post.created_at)}</div>
+              </div>
+            </a>
+          `).join('');
+        })
+        .catch(() => {}); // silently keep empty state on error
+
+      // ── Deadlines — start empty ────────────────────────────────────────────
+      localStorage.removeItem('studentDeadlines');
+      let deadlines = JSON.parse(localStorage.getItem('studentDeadlines') || '[]');
+
+      function saveDeadlines() {
+        localStorage.setItem('studentDeadlines', JSON.stringify(deadlines));
+      }
+
+      function calculateDaysLeft(dueDate) {
+        const today = new Date(); today.setHours(0,0,0,0);
+        const due   = new Date(dueDate); due.setHours(0,0,0,0);
+        return Math.ceil((due - today) / 86400000);
+      }
+
+      function urgencyLevel(d) { return d <= 3 ? 'urgent' : d <= 7 ? 'warning' : 'normal'; }
+      function badgeText(d)    { return d <= 3 ? 'Urgent' : d <= 7 ? 'Coming Soon' : 'On Track'; }
+
+      function formatDate(ds) {
+        return new Date(ds).toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' });
+      }
+
+      function escapeHtml(text) {
+        const d = document.createElement('div');
+        d.textContent = text;
+        return d.innerHTML;
+      }
+
+      function timeAgo(dateString) {
+        const diff = Math.floor((Date.now() - new Date(dateString)) / 60000);
+        if (diff < 1)   return 'just now';
+        if (diff < 60)  return diff + 'm ago';
+        if (diff < 1440) return Math.floor(diff / 60) + 'h ago';
+        return Math.floor(diff / 1440) + 'd ago';
+      }
+
+      window.deleteDeadline = function(id) {
+        deadlines = deadlines.filter(d => d.id !== id);
+        saveDeadlines();
+        renderDeadlines();
+      };
+
+      function addDeadline(title, course, dueDate) {
+        deadlines.push({ id: Date.now(), title, course, dueDate });
+        deadlines.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+        saveDeadlines();
+        renderDeadlines();
+      }
+
+      function renderDeadlines() {
+        const container = document.getElementById('deadlinesList');
+        if (!container) return;
+
+        if (deadlines.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <p>No deadlines yet.<br>Add one to stay on track.</p>
+            </div>`;
+          return;
+        }
+
+        container.innerHTML = deadlines.map(dl => {
+          const daysLeft = calculateDaysLeft(dl.dueDate);
+          const urgency  = urgencyLevel(daysLeft);
+          const daysText = daysLeft < 0 ? 'Overdue!' : daysLeft === 0 ? 'Today!' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
+
+          return `
+            <div class="deadline-item ${urgency}">
+              <button class="delete-deadline" onclick="deleteDeadline(${dl.id})" title="Remove">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+              <div class="deadline-header">
+                <span class="deadline-title">${escapeHtml(dl.title)}</span>
+                <span class="deadline-badge ${urgency}">${badgeText(daysLeft)}</span>
+              </div>
+              <div class="deadline-course">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+                ${escapeHtml(dl.course)}
+              </div>
+              <div class="deadline-date">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                Due: ${formatDate(dl.dueDate)}
+              </div>
+              <div class="deadline-days-left ${urgency}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ${daysText}
+              </div>
+            </div>`;
+        }).join('');
+      }
+
+      // Modal
+      const modal     = document.getElementById('deadlineModal');
+      const form      = document.getElementById('deadlineForm');
+      const addBtn    = document.getElementById('addDeadlineBtn');
+      const closeBtn  = document.getElementById('closeModalBtn');
+      const cancelBtn = document.getElementById('cancelModalBtn');
+
+      const openModal  = () => modal.classList.add('active');
+      const closeModal = () => { modal.classList.remove('active'); form.reset(); };
+
+      addBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      cancelBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const title   = document.getElementById('deadlineTitle').value.trim();
+        const course  = document.getElementById('deadlineCourse').value.trim();
+        const dueDate = document.getElementById('deadlineDate').value;
+        if (!title || !course || !dueDate) return;
+        addDeadline(title, course, dueDate);
+        closeModal();
+      });
+
+      // Initial render
+      renderDeadlines();
+    </script>
+
+    <script src="javascript/chatbot.js"></script>
+  </body>
+</html>

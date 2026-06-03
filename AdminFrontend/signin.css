@@ -1,0 +1,331 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --purple:       #301063;
+  --purple-dark:  #412d70;
+  --white:        #ffffff;
+  --gray-border:  #e0e0e0;
+  --gray-text:    #888;
+  --label-color:  #555;
+  --dark:         #111;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  background: #fff;
+  display: block !important;
+}
+
+.page {
+  display: flex !important;
+  min-height: 100vh;
+}
+
+/* ══ LEFT PANEL ══ */
+.left-panel {
+  width: 44%;
+  background: var(--purple);
+  padding: 36px 48px 36px 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ══ LOGO ══ */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.logo-icon img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  mix-blend-mode: lighten;
+}
+
+.admin-badge-header {
+  display: inline-block;
+  background: linear-gradient(135deg, #2E1065, #4C1D95);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* ══ LEFT CONTENT ══ */
+.left-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(38px, 4.8vw, 60px);
+  color: white;
+  line-height: 1.08;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+.hero-text .dot {
+  color: #f59e0b;
+}
+
+.hero-sub {
+  color: rgba(255,255,255,0.72);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 340px;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.feat-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feature-list li strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 3px;
+}
+
+.feature-list li span {
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.4;
+}
+
+/* ══ RIGHT PANEL - NO BOTTOM SPACE ══ */
+.right-panel {
+  flex: 1;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 30px 48px 30px 48px;
+  background: white;
+}
+
+.form-container {
+  width: 100% !important;
+  max-width: 420px !important;
+  margin: 0 auto !important;
+}
+
+.secure-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e8e8e8;
+  padding: 4px 12px;
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.form-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.form-subtitle {
+  color: var(--gray-text);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ══ FIELDS ══ */
+.field-group {
+  margin-bottom: 16px;
+}
+
+.field-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: var(--label-color);
+  margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 48px 12px 18px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--dark);
+  background: white;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input::placeholder { color: #c0c0c0; }
+
+input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(75,15,204,0.1);
+}
+
+input.error {
+  border-color: #e53935;
+  box-shadow: 0 0 0 3px rgba(229,57,53,0.1);
+}
+
+.input-wrapper { position: relative; }
+.input-wrapper input { padding-right: 50px; }
+
+.eye-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: #999;
+}
+
+.eye-btn:hover { color: var(--purple); }
+
+.forgot-row {
+  text-align: right;
+  margin-top: 4px;
+}
+
+.forgot-link {
+  font-size: 12px;
+  font-weight: 700;
+  color: #240669;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ══ BUTTONS ══ */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--purple);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--purple-dark);
+  box-shadow: 0 8px 24px rgba(75,15,204,0.32);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ══ SIGNUP LINK AT BOTTOM ══ */
+.signup-bottom-link {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 0;
+  font-size: 13px;
+  color: var(--gray-text);
+}
+
+.signup-bottom-link a {
+  color: var(--purple);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-bottom-link a:hover {
+  text-decoration: underline;
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 820px) {
+  .page { flex-direction: column; }
+  .left-panel { width: 100%; padding: 30px 28px 30px 28px; }
+  .hero-text { font-size: 34px; }
+  .right-panel { padding: 24px 24px 24px 24px; align-items: flex-start !important; }
+  .form-container { max-width: 100% !important; }
+  .form-title { font-size: 30px; }
+}
+
+@media (max-width: 480px) {
+  .hero-text { font-size: 28px; }
+  .form-title { font-size: 26px; }
+}

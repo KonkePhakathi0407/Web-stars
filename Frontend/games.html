@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindCare Hub – Games & Mindfulness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
+    <script src="utils/theme.js"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/games.css" />
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo">MindCare Hub</div>
+            <div class="brand-sub">Academic Support</div>
+        </div>
+        <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item ">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="mood.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+          Mood Tracker and AI
+        </a>
+        <a href="journal.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          Journal
+        </a>
+        <a href="findhelp.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Find Help
+        </a>
+        <a href="crisis.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          Crisis Centre
+        </a>
+        <a href="bookings.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Bookings
+        </a>
+        <a href="forum.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          Forum
+        </a>
+        <a href="games.html" class="nav-item active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="8" width="20" height="10" rx="3" />
+            <line x1="7" y1="13" x2="7" y2="13" />
+            <line x1="7" y1="11" x2="7" y2="15" />
+            <line x1="5" y1="13" x2="9" y2="13" />
+            <circle cx="15" cy="12" r="0.8" fill="currentColor" />
+            <circle cx="17" cy="14" r="0.8" fill="currentColor" />
+          </svg>
+          Games
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+          </svg>
+          Settings
+        </a>
+      </nav>
+        <div class="sidebar-footer">
+            <a href="logout.html" class="sidebar-link">Logout</a>
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1 class="topbar-title">Games &amp; Mindfulness</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="search-wrap">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input class="search-input" type="text" placeholder="Search activities..." id="searchGamesInput" />
+                </div>
+                <button class="icon-btn" id="notifyBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                </button>
+                <button class="icon-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+                    </svg>
+                </button>
+                <a href="settings.html" class="user-avatar-link">
+                    <div class="user-avatar" id="userAvatar">
+                        <img id="profileImage" src="" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: none;">
+                        <svg id="defaultAvatar" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </header>
+
+        <div class="page-body">
+            <!-- CURATED COLLECTIONS -->
+            <section class="section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Curated Collections</h2>
+                        <p class="section-sub">Selected by campus therapists for cognitive restoration.</p>
+                    </div>
+                </div>
+
+                <div class="games-grid" id="gamesGrid">
+                    <!-- Memory Focus -->
+                    <div class="game-card" data-game="memory">
+                        <div class="game-thumb purple-thumb">
+                            <div class="spiral-art">
+                                <div class="spiral-ring r1"></div>
+                                <div class="spiral-ring r2"></div>
+                                <div class="spiral-ring r3"></div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-title-row">
+                                <span class="game-name">Memory Focus</span>
+                                <span class="game-tag focus-tag">FOCUS</span>
+                            </div>
+                            <p class="game-desc">Watch the pattern light up on the grid, then click the highlighted blocks. Each level adds more blocks!</p>
+                            <div class="game-meta-row">
+                                <span class="game-meta-pill">Cognitive</span>
+                                <button class="play-btn" onclick="openGame('memory')">Play Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Puzzle Escape Game -->
+                    <div class="game-card" data-game="puzzle">
+                        <div class="game-thumb water-thumb">
+                            <div class="water-ripple"></div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-title-row">
+                                <span class="game-name">Puzzle Escape</span>
+                                <span class="game-tag logic-tag">LOGIC</span>
+                            </div>
+                            <p class="game-desc">Solve number sequences to unlock the next puzzle. Find the pattern, enter the next number, train your brain!</p>
+                            <div class="game-meta-row">
+                                <span class="game-meta-pill">Puzzle</span>
+                                <button class="play-btn" onclick="openGame('puzzle')">Play Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Breathing Rhythms -->
+                    <div class="game-card" data-game="breathing">
+                        <div class="game-thumb sunset-thumb">
+                            <div class="sunset-glow"></div>
+                        </div>
+                        <div class="game-info">
+                            <div class="game-title-row">
+                                <span class="game-name">Breathing Rhythms</span>
+                                <span class="game-tag calm-tag">CALM</span>
+                            </div>
+                            <p class="game-desc">An interactive guide for box breathing and tactile relaxation techniques.</p>
+                            <div class="game-meta-row">
+                                <span class="game-meta-pill">Guided</span>
+                                <button class="play-btn" onclick="openGame('breathing')">Play Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RECOMMENDED VIDEOS -->
+            <section class="section">
+                <h2 class="section-title">Recommended Videos</h2>
+                <div class="videos-grid" id="videosGrid">
+                    <div class="video-card" data-url="https://youtu.be/MR57rug8NsM">
+                        <div class="video-thumb v1">
+                            <button class="play-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+                            <span class="video-duration">5:20</span>
+                        </div>
+                        <div class="video-info"><p class="video-title">5-Minute Anxiety Release</p></div>
+                    </div>
+                    <div class="video-card" data-url="https://youtu.be/30VMIEmA114">
+                        <div class="video-thumb v2">
+                            <button class="play-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+                            <span class="video-duration">8:15</span>
+                        </div>
+                        <div class="video-info"><p class="video-title">Grounding Techniques for Students</p></div>
+                    </div>
+                    <div class="video-card" data-url="https://youtu.be/6Rg0mBkVAeo">
+                        <div class="video-thumb v3">
+                            <button class="play-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+                            <span class="video-duration">12:40</span>
+                        </div>
+                        <div class="video-info"><p class="video-title">Overcoming Exam Nerves</p></div>
+                    </div>
+                    <div class="video-card" data-url="https://youtu.be/DbDoBzGY3vo">
+                        <div class="video-thumb v4">
+                            <button class="play-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+                            <span class="video-duration">6:10</span>
+                        </div>
+                        <div class="video-info"><p class="video-title">Deep Breathing for Exam Success</p></div>
+                    </div>
+                    <div class="video-card" data-url="https://youtu.be/irp5ghCVNAM">
+                        <div class="video-thumb v5">
+                            <button class="play-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+                            <span class="video-duration">16:45</span>
+                        </div>
+                        <div class="video-info"><p class="video-title">Overcoming Procrastination</p></div>
+                    </div>
+                    <div class="video-card" data-url="https://youtu.be/ausxoXBrmWs">
+                        <div class="video-thumb v6">
+                            <button class="play-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3" /></svg></button>
+                            <span class="video-duration">15:00</span>
+                        </div>
+                        <div class="video-info"><p class="video-title">Guided Mindfulness for Focus</p></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="game-modal-overlay">
+        <div class="game-modal">
+            <div class="game-modal-header">
+                <h2 class="game-modal-title" id="gameModalTitle">Game</h2>
+                <button class="game-modal-close" onclick="closeGame()">&times;</button>
+            </div>
+            <div class="game-modal-body" id="gameModalBody"></div>
+        </div>
+    </div>
+
+    <style>
+        /* ── Modal base (matches existing games.css pattern) ── */
+        .game-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26,10,60,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .game-modal-overlay.active { display: flex; }
+        .game-modal {
+            background: #fff;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+            animation: modalIn 0.22s ease;
+        }
+        @keyframes modalIn {
+            from { opacity:0; transform: translateY(16px) scale(0.97); }
+            to   { opacity:1; transform: none; }
+        }
+        .game-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid #e8e8f0;
+            position: sticky; top: 0;
+            background: #fff; z-index: 1;
+        }
+        .game-modal-title { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+        .game-modal-close {
+            background: none; border: none; font-size: 24px;
+            color: #7a7a9a; cursor: pointer; line-height: 1;
+            padding: 4px 8px; border-radius: 6px; transition: background 0.15s;
+        }
+        .game-modal-close:hover { background: #f5f5fa; color: #1a1a2e; }
+        .game-modal-body { padding: 22px 24px 28px; }
+
+        /* ── Shared game stats bar ── */
+        .gm-stats {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+        .gm-stat {
+            background: #f7f4ff;
+            border: 1px solid #e8e8f0;
+            border-radius: 10px;
+            padding: 7px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #4a4a6a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .gm-stat span { color: #5b3ec8; font-size: 15px; }
+
+        /* ── Primary action button ── */
+        .gm-btn {
+            background: #5b3ec8;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 28px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.12s;
+        }
+        .gm-btn:hover { background: #7c4fd4; transform: translateY(-1px); }
+        .gm-btn.secondary {
+            background: #e8e8f0; color: #4a4a6a;
+        }
+        .gm-btn.secondary:hover { background: #d8d8ea; }
+
+        /* ════════════════════════════════
+           MEMORY FOCUS — 5×5 grid game
+        ════════════════════════════════ */
+        #memGrid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 0 auto 18px;
+            max-width: 420px;
+        }
+        .mem-cell {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            background: #f7f4ff;
+            border: 2px solid #e8e8f0;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.1s;
+        }
+        .mem-cell:hover { transform: scale(1.04); border-color: #c4b5fd; }
+        .mem-cell.active {
+            background: #fde68a;
+            border-color: #f59e0b;
+            transform: scale(1.06);
+        }
+        .mem-cell.correct {
+            background: #bbf7d0;
+            border-color: #22c55e;
+        }
+        .mem-cell.wrong {
+            background: #fecaca;
+            border-color: #ef4444;
+        }
+        #memStatus {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #5b3ec8;
+            min-height: 22px;
+            margin-bottom: 16px;
+        }
+        #memTimerBar {
+            height: 6px;
+            background: #e8e8f0;
+            border-radius: 99px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+        #memTimerFill {
+            height: 100%;
+            background: #5b3ec8;
+            border-radius: 99px;
+            transition: width 1s linear, background 0.3s;
+            width: 100%;
+        }
+
+        /* ════════════════════════════════
+           PUZZLE ESCAPE — number pattern
+        ════════════════════════════════ */
+        #puzzlePattern {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #1a1a2e;
+            text-align: center;
+            background: #f7f4ff;
+            border: 2px solid #e8e8f0;
+            border-radius: 14px;
+            padding: 18px 12px;
+            margin: 0 auto 18px;
+        }
+        #puzzleAnswer {
+            display: block;
+            width: 70%;
+            margin: 0 auto 14px;
+            padding: 12px 16px;
+            border: 2px solid #e8e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'DM Sans', sans-serif;
+            color: #1a1a2e;
+            outline: none;
+            transition: border-color 0.15s;
+            text-align: center;
+        }
+        #puzzleAnswer:focus { border-color: #5b3ec8; }
+        #puzzleMessage {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            min-height: 22px;
+            margin-top: 10px;
+        }
+        #puzzleMessage.correct { color: #16a34a; }
+        #puzzleMessage.wrong   { color: #dc2626; }
+
+        /* ════════════════════════════════
+           BREATHING RHYTHMS (unchanged)
+        ════════════════════════════════ */
+        .breath-circle {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #7c4fd4, #5b3ec8);
+            box-shadow: 0 0 0 20px rgba(91,62,200,0.1);
+            transition: all 1s ease;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .breath-circle span { color: #fff; font-size: 16px; font-weight: 700; }
+        .breath-bar-wrap {
+            width: 200px; height: 6px;
+            background: #e8e8f0; border-radius: 99px;
+            overflow: hidden; margin: 0 auto 12px;
+        }
+        #breathBar { height:100%; width:0%; background:#5b3ec8; border-radius:99px; transition: width 0.1s linear; }
+    </style>
+
+    <script>
+        // ── Auth & profile ────────────────────────────────────────────────
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) window.location.href = 'signin.html';
+
+        async function loadProfilePicture() {
+            try {
+                const r = await fetch('http://localhost:3000/api/settings/profile', { credentials: 'include' });
+                const d = await r.json();
+                if (d.success && d.user && d.user.profile_picture) {
+                    const img = document.getElementById('profileImage');
+                    img.src = `http://localhost:3000${d.user.profile_picture}?t=${Date.now()}`;
+                    img.style.display = 'block';
+                    document.getElementById('defaultAvatar').style.display = 'none';
+                }
+            } catch(e) {}
+        }
+        loadProfilePicture();
+
+        // ── Search ────────────────────────────────────────────────────────
+        document.getElementById('searchGamesInput').addEventListener('input', function(e) {
+            const q = e.target.value.toLowerCase();
+            document.querySelectorAll('.game-card').forEach(c => {
+                const t = c.querySelector('.game-name').textContent.toLowerCase();
+                const d = c.querySelector('.game-desc').textContent.toLowerCase();
+                c.style.display = (t.includes(q) || d.includes(q)) ? '' : 'none';
+            });
+            document.querySelectorAll('.video-card').forEach(c => {
+                c.style.display = c.querySelector('.video-title').textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+        });
+
+        // ── Video cards ───────────────────────────────────────────────────
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('click', e => {
+                if (e.target.closest('.play-circle')) return;
+                const url = card.getAttribute('data-url');
+                if (url) window.open(url, '_blank', 'noopener,noreferrer');
+            });
+        });
+        document.querySelectorAll('.play-circle').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                const url = btn.closest('.video-card').getAttribute('data-url');
+                if (url) window.open(url, '_blank', 'noopener,noreferrer');
+            });
+        });
+
+        // ════════════════════════════════════════════════════════
+        //  MEMORY FOCUS — your game.html logic, modal-adapted
+        // ════════════════════════════════════════════════════════
+        let memScore = 0, memLevel = 1, memTime = 30;
+        let memPattern = [], memPlayerPattern = [];
+        let memTimer = null;
+
+        function buildMemoryGame() {
+            let cells = '';
+            for (let i = 0; i < 25; i++) {
+                cells += `<div class="mem-cell" data-index="${i}"></div>`;
+            }
+            return `
+                <p style="font-size:14px;color:#4a4a6a;margin-bottom:16px;line-height:1.6;text-align:center">
+                    Watch the blocks light up, then click each highlighted block. More blocks added each level!
+                </p>
+                <div class="gm-stats">
+                    <div class="gm-stat">Score <span id="memScore">0</span></div>
+                    <div class="gm-stat">Level <span id="memLevel">1</span></div>
+                    <div class="gm-stat">Time <span id="memTime">30</span>s</div>
+                </div>
+                <div id="memTimerBar"><div id="memTimerFill"></div></div>
+                <div id="memStatus">Press Start to begin!</div>
+                <div id="memGrid">${cells}</div>
+                <div style="text-align:center">
+                    <button class="gm-btn" id="memStartBtn" onclick="startMemoryGame()">Start Game</button>
+                </div>
+            `;
+        }
+
+        function startMemoryGame() {
+            memScore = 0; memLevel = 1; memTime = 30;
+            updateMemStats();
+            document.getElementById('memStartBtn').textContent = 'Restart';
+            clearAllMemCells();
+            startMemTimer();
+            nextMemRound();
+        }
+
+        function updateMemStats() {
+            document.getElementById('memScore').textContent = memScore;
+            document.getElementById('memLevel').textContent = memLevel;
+            document.getElementById('memTime').textContent = memTime;
+            // Update timer bar colour based on urgency
+            const fill = document.getElementById('memTimerFill');
+            if (fill) {
+                const pct = (memTime / 30) * 100;
+                fill.style.width = pct + '%';
+                fill.style.background = memTime <= 10 ? '#ef4444' : memTime <= 20 ? '#f59e0b' : '#5b3ec8';
+            }
+        }
+
+        function startMemTimer() {
+            clearInterval(memTimer);
+            const fill = document.getElementById('memTimerFill');
+            if (fill) fill.style.transition = 'width 1s linear, background 0.3s';
+            memTimer = setInterval(() => {
+                memTime--;
+                updateMemStats();
+                if (memTime <= 0) {
+                    clearInterval(memTimer);
+                    const status = document.getElementById('memStatus');
+                    if (status) status.textContent = `Time is up. Final score: ${memScore}`;
+                    // Disable all cells
+                    document.querySelectorAll('#memGrid .mem-cell').forEach(c => {
+                        c.style.pointerEvents = 'none';
+                    });
+                }
+            }, 1000);
+        }
+
+        function clearAllMemCells() {
+            document.querySelectorAll('#memGrid .mem-cell').forEach(c => {
+                c.classList.remove('active', 'correct', 'wrong');
+                c.style.pointerEvents = '';
+            });
+        }
+
+        function nextMemRound() {
+            memPlayerPattern = [];
+            memPattern = [];
+            clearAllMemCells();
+
+            const status = document.getElementById('memStatus');
+            if (status) status.textContent = 'Watch the pattern…';
+
+            const numBlocks = memLevel + 2;
+            while (memPattern.length < numBlocks) {
+                const r = Math.floor(Math.random() * 25);
+                if (!memPattern.includes(r)) memPattern.push(r);
+            }
+
+            showMemPattern();
+        }
+
+        function showMemPattern() {
+            const cells = document.querySelectorAll('#memGrid .mem-cell');
+            // Disable clicks during pattern display
+            cells.forEach(c => c.style.pointerEvents = 'none');
+
+            memPattern.forEach((index, i) => {
+                setTimeout(() => {
+                    cells[index].classList.add('active');
+                    setTimeout(() => cells[index].classList.remove('active'), 500);
+                }, i * 700);
+            });
+
+            // Re-enable after pattern finishes
+            setTimeout(() => {
+                cells.forEach(c => c.style.pointerEvents = '');
+                const status = document.getElementById('memStatus');
+                if (status) status.textContent = 'Your turn — click the highlighted blocks!';
+                attachMemCellListeners();
+            }, memPattern.length * 700 + 600);
+        }
+
+        function attachMemCellListeners() {
+            document.querySelectorAll('#memGrid .mem-cell').forEach(cell => {
+                cell.onclick = function() {
+                    const index = parseInt(this.dataset.index);
+                    if (memPlayerPattern.includes(index)) return;
+                    memPlayerPattern.push(index);
+
+                    if (memPattern.includes(index)) {
+                        this.classList.add('correct');
+                        memScore += 10;
+                        updateMemStats();
+                    } else {
+                        this.classList.add('wrong');
+                        const status = document.getElementById('memStatus');
+                        if (status) status.textContent = 'Incorrect. Resetting level...';
+                        memLevel = 1;
+                        memScore = 0;
+                        updateMemStats();
+                        setTimeout(nextMemRound, 900);
+                        return;
+                    }
+
+                    if (memPlayerPattern.length === memPattern.length) {
+                        memLevel++;
+                        updateMemStats();
+                        const status = document.getElementById('memStatus');
+                        if (status) status.textContent = `Level ${memLevel - 1} complete. Get ready...`;
+                        setTimeout(nextMemRound, 1000);
+                    }
+                };
+            });
+        }
+
+        // ════════════════════════════════════════════════════════
+        //  PUZZLE ESCAPE — your escapeGame.html logic, modal-adapted
+        // ════════════════════════════════════════════════════════
+        let puzzleScore = 0, puzzleAnswer = 0;
+
+        function buildPuzzleGame() {
+            return `
+                <p style="font-size:14px;color:#4a4a6a;margin-bottom:18px;line-height:1.6;text-align:center">
+                    Solve the number pattern to unlock the next puzzle. Train your brain and relax your mind.
+                </p>
+                <div class="gm-stats">
+                    <div class="gm-stat">Score <span id="puzzleScore">0</span></div>
+                </div>
+                <div id="puzzlePattern"></div>
+                <input type="number" id="puzzleAnswer" placeholder="Enter the next number" />
+                <div style="text-align:center;margin-top:4px">
+                    <button class="gm-btn" onclick="checkPuzzleAnswer()">Submit Answer</button>
+                </div>
+                <div id="puzzleMessage"></div>
+            `;
+        }
+
+        function initPuzzleGame() {
+            puzzleScore = 0;
+            document.getElementById('puzzleScore').textContent = '0';
+            generatePuzzle();
+        }
+
+        function generatePuzzle() {
+            const start = Math.floor(Math.random() * 10) + 1;
+            const step  = Math.floor(Math.random() * 5) + 2;
+            const seq   = [];
+            for (let i = 0; i < 5; i++) seq.push(start + i * step);
+            puzzleAnswer = start + 5 * step;
+
+            const patternEl = document.getElementById('puzzlePattern');
+            if (patternEl) patternEl.textContent = seq.join('  ,  ') + '  ,  ?';
+
+            const answerEl = document.getElementById('puzzleAnswer');
+            if (answerEl) { answerEl.value = ''; answerEl.focus(); }
+
+            const msgEl = document.getElementById('puzzleMessage');
+            if (msgEl) { msgEl.textContent = ''; msgEl.className = ''; }
+        }
+
+        function checkPuzzleAnswer() {
+            const answerEl = document.getElementById('puzzleAnswer');
+            const msgEl    = document.getElementById('puzzleMessage');
+            if (!answerEl || !msgEl) return;
+
+            const userAnswer = Number(answerEl.value);
+            if (userAnswer === puzzleAnswer) {
+                puzzleScore += 10;
+                document.getElementById('puzzleScore').textContent = puzzleScore;
+                msgEl.textContent = 'Correct. New puzzle unlocked.';
+                msgEl.className = 'correct';
+                setTimeout(generatePuzzle, 700);
+            } else {
+                msgEl.textContent = 'Incorrect. Try again.';
+                msgEl.className = 'wrong';
+            }
+        }
+
+        // Allow Enter key to submit puzzle answer
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter' && document.getElementById('puzzleAnswer') === document.activeElement) {
+                checkPuzzleAnswer();
+            }
+        });
+
+        // ════════════════════════════════════════════════════════
+        //  BREATHING RHYTHMS — mood-aware, auto-stop
+        // ════════════════════════════════════════════════════════
+        let breathRunning = false, breathPhase = 0, breathCycles = 0, breathTargetCycles = 3;
+        let breathTimeout = null, breathBarInterval = null, breathBarStart = 0;
+
+        // 3s in · 3s hold · 5s out
+        const BREATH_PHASES = [
+            { label: 'Breathe In',  duration: 3000, size: '175px', opacity: 0.2  },
+            { label: 'Hold',        duration: 3000, size: '175px', opacity: 0.25 },
+            { label: 'Breathe Out', duration: 5000, size: '115px', opacity: 0.1  },
+        ];
+        const BREATH_TIPS = [
+            'Slow breathing activates your parasympathetic nervous system.',
+            'The longer exhale is intentional — it is what calms the heart rate.',
+            'Your body is already beginning to relax.',
+            'Almost there. Stay with the rhythm.',
+        ];
+
+        // Read mood score from localStorage — your Mood Tracker should save
+        // a value like: localStorage.setItem('moodScore', '3') (1=great … 5=terrible)
+        // or a label like: localStorage.setItem('currentMood', 'stressed')
+        function getMoodCycles() {
+            // Try numeric mood score first (1–5, higher = worse)
+            const score = parseInt(localStorage.getItem('moodScore') || localStorage.getItem('mood_score') || '0');
+            if (score >= 4)  return 6; // high stress → 6 cycles
+            if (score >= 3)  return 4; // moderate   → 4 cycles
+            if (score >= 1)  return 3; // low stress  → 3 cycles
+
+            // Fallback: try mood label
+            const label = (localStorage.getItem('currentMood') || localStorage.getItem('mood') || '').toLowerCase();
+            if (label.includes('stress') || label.includes('anxious') || label.includes('awful') || label.includes('terrible')) return 6;
+            if (label.includes('sad') || label.includes('bad') || label.includes('worried')) return 4;
+
+            // Try last mood tracker entry object
+            try {
+                const entries = JSON.parse(localStorage.getItem('moodEntries') || '[]');
+                if (entries.length > 0) {
+                    const last = entries[entries.length - 1];
+                    const s = last.score || last.mood || last.value || 0;
+                    if (s >= 4) return 6;
+                    if (s >= 3) return 4;
+                }
+            } catch(e) {}
+
+            return 3; // default if nothing found
+        }
+
+        function buildBreathingGame() {
+            const cycles = getMoodCycles();
+            const moodLabel = cycles === 6 ? 'High stress detected — extended session recommended'
+                            : cycles === 4 ? 'Moderate stress — a focused reset'
+                            :                'Low stress — a brief check-in';
+            return `
+                <p style="font-size:14px;color:#4a4a6a;margin-bottom:8px;line-height:1.6;text-align:center">
+                    Follow the circle. Breathe in as it expands, hold, then breathe out as it shrinks.
+                </p>
+                <div style="text-align:center;font-size:12px;font-weight:600;color:#5b3ec8;
+                    background:#f7f4ff;border-radius:10px;padding:8px 14px;margin-bottom:18px">
+                    ${moodLabel} · ${cycles} cycles planned
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+                    <div id="breathCircle" class="breath-circle">
+                        <span id="breathLabel">Ready</span>
+                    </div>
+                    <div class="breath-bar-wrap"><div id="breathBar"></div></div>
+                    <div style="font-size:13px;color:#7a7a9a;font-weight:600">
+                        Cycle <span id="breathCount">0</span> of <span id="breathTarget">${cycles}</span>
+                    </div>
+                    <div style="display:flex;gap:12px">
+                        <button class="gm-btn" id="breathStartBtn" onclick="startBreathing()">Begin</button>
+                        <button class="gm-btn secondary" id="breathStopBtn" style="display:none" onclick="stopBreathing()">Stop</button>
+                    </div>
+                    <div id="breathTip" style="font-size:13px;color:#7a7a9a;text-align:center;max-width:280px;line-height:1.6"></div>
+                </div>
+            `;
+        }
+
+        function startBreathing() {
+            stopBreathing();
+            breathTargetCycles = getMoodCycles();
+            breathRunning = true; breathCycles = 0; breathPhase = 0;
+            const countEl  = document.getElementById('breathCount');
+            const targetEl = document.getElementById('breathTarget');
+            if (countEl)  countEl.textContent  = '0';
+            if (targetEl) targetEl.textContent = breathTargetCycles;
+            const s = document.getElementById('breathStartBtn');
+            const e = document.getElementById('breathStopBtn');
+            if (s) s.style.display = 'none';
+            if (e) e.style.display = 'inline-block';
+            runBreathPhase();
+        }
+
+        function stopBreathing() {
+            breathRunning = false;
+            clearTimeout(breathTimeout);
+            clearInterval(breathBarInterval);
+            const circle = document.getElementById('breathCircle');
+            const label  = document.getElementById('breathLabel');
+            const bar    = document.getElementById('breathBar');
+            const sBtn   = document.getElementById('breathStartBtn');
+            const eBtn   = document.getElementById('breathStopBtn');
+            const tip    = document.getElementById('breathTip');
+            if (circle) { circle.style.width = '140px'; circle.style.height = '140px'; circle.style.boxShadow = '0 0 0 20px rgba(91,62,200,0.1)'; }
+            if (label)  label.textContent = breathCycles >= breathTargetCycles ? 'Complete' : 'Paused';
+            if (bar)    bar.style.width = '0%';
+            if (sBtn)   sBtn.style.display = 'inline-block';
+            if (sBtn)   sBtn.textContent = breathCycles >= breathTargetCycles ? 'Go Again' : 'Resume';
+            if (eBtn)   eBtn.style.display = 'none';
+            if (tip) {
+                tip.textContent = breathCycles >= breathTargetCycles
+                    ? `Session complete. You completed all ${breathTargetCycles} cycles. Take a moment to notice how you feel.`
+                    : `Paused after ${breathCycles} cycle${breathCycles !== 1 ? 's' : ''}. Press Resume when ready.`;
+            }
+        }
+
+        function runBreathPhase() {
+            if (!breathRunning) return;
+            const phase  = BREATH_PHASES[breathPhase];
+            const circle = document.getElementById('breathCircle');
+            const label  = document.getElementById('breathLabel');
+            const bar    = document.getElementById('breathBar');
+            if (!circle || !label || !bar) return;
+            circle.style.width     = phase.size;
+            circle.style.height    = phase.size;
+            circle.style.boxShadow = `0 0 0 20px rgba(91,62,200,${phase.opacity})`;
+            label.textContent      = phase.label;
+            bar.style.width = '0%';
+            breathBarStart = Date.now();
+            clearInterval(breathBarInterval);
+            breathBarInterval = setInterval(() => {
+                const pct = Math.min(((Date.now() - breathBarStart) / phase.duration) * 100, 100);
+                bar.style.width = pct + '%';
+            }, 50);
+            breathTimeout = setTimeout(() => {
+                clearInterval(breathBarInterval);
+                breathPhase = (breathPhase + 1) % BREATH_PHASES.length;
+                if (breathPhase === 0) {
+                    // Completed one full cycle
+                    breathCycles++;
+                    const countEl = document.getElementById('breathCount');
+                    const tipEl   = document.getElementById('breathTip');
+                    if (countEl) countEl.textContent = breathCycles;
+                    if (tipEl)   tipEl.textContent   = BREATH_TIPS[Math.min(breathCycles - 1, BREATH_TIPS.length - 1)];
+
+                    // Auto-stop when target reached
+                    if (breathCycles >= breathTargetCycles) {
+                        stopBreathing();
+                        return;
+                    }
+                }
+                runBreathPhase();
+            }, phase.duration);
+        }
+
+        // ════════════════════════════════════════════════════════
+        //  MODAL OPEN / CLOSE
+        // ════════════════════════════════════════════════════════
+        function openGame(gameType) {
+            const modal = document.getElementById('gameModal');
+            const title = document.getElementById('gameModalTitle');
+            const body  = document.getElementById('gameModalBody');
+
+            // Clear any running timers from previous session
+            clearInterval(memTimer);
+            stopBreathing();
+
+            switch (gameType) {
+                case 'memory':
+                    title.textContent = 'Memory Focus';
+                    body.innerHTML = buildMemoryGame();
+                    break;
+                case 'puzzle':
+                    title.textContent = 'Puzzle Escape';
+                    body.innerHTML = buildPuzzleGame();
+                    initPuzzleGame();
+                    break;
+                case 'breathing':
+                    title.textContent = 'Breathing Rhythms';
+                    body.innerHTML = buildBreathingGame();
+                    break;
+                default: return;
+            }
+            modal.classList.add('active');
+        }
+
+        function closeGame() {
+            clearInterval(memTimer);
+            stopBreathing();
+            document.getElementById('gameModal').classList.remove('active');
+        }
+
+        window.openGame  = openGame;
+        window.closeGame = closeGame;
+        window.startMemoryGame   = startMemoryGame;
+        window.checkPuzzleAnswer = checkPuzzleAnswer;
+        window.startBreathing    = startBreathing;
+        window.stopBreathing     = stopBreathing;
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeGame();
+        });
+    </script>
+</body>
+</html>
