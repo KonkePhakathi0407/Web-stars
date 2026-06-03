@@ -157,7 +157,9 @@ app.use('/api/admin/forum', isAdminAuthenticated, adminForumRoutes);
 
 // ========== GROQ AI CHAT ==========
 const Groq = require('groq-sdk');
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY
+});
 
 app.post('/api/ai-chat', async (req, res) => {
     const { message, history = [] } = req.body;
