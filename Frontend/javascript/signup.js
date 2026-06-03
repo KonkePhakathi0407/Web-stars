@@ -1,7 +1,7 @@
 console.log('Signup page loaded');
 
 // ── Resolve API base from environment or fall back gracefully ─────────────────
-const API = window.API_BASE_URL || 'http://localhost:3000/api';
+const API = window.API_BASE_URL || 'https://web-stars-production.up.railway.app/api';
 
 // ── University → allowed email domains ───────────────────────────────────────
 const UNIVERSITY_DOMAINS = {
