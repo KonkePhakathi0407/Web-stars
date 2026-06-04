@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindCare Hub — Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="Admin_Landing.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ── TOP NAV ── -->
+    <nav class="top-nav" role="navigation" aria-label="Main navigation">
+      <div class="nav-brand">
+        <img src="logo_web.webp" alt="MindCare Hub Logo" class="nav-logo-img" />
+        <span class="nav-brand-name">MindCare Hub</span>
+      </div>
+      <div class="nav-links">
+        <a
+          href="#"
+          class="nav-link"
+          id="nav-features"
+          onclick="handleNav(event, 'features')"
+          >FEATURES</a
+        >
+        <a
+          href="#"
+          class="nav-link"
+          id="nav-how"
+          onclick="handleNav(event, 'how')"
+          >HOW IT WORKS</a
+        >
+        <a
+          href="#"
+          class="nav-link"
+          id="nav-findhelp"
+          onclick="handleNav(event, 'findhelp')"
+          >FIND HELP</a
+        >
+      </div>
+      <div class="nav-auth-links">
+        <a href="signim.html" class="btn-nav-signin">Sign In</a>
+        <a href="create.html" class="btn-nav-register">Register</a>
+      </div>
+    </nav>
+
+    <!-- ── MAIN ── -->
+    <main id="landing-page">
+      <!-- ── HERO ── -->
+      <section class="hero" aria-label="Hero">
+        <div class="hero-content">
+          <p class="hero-eyebrow">ADMIN PORTAL</p>
+          <h1 class="hero-headline serif">
+            Empowering mental<br />health, <em>one session</em><br />at a time.
+          </h1>
+          <p class="hero-sub">
+            Full access to platform management, user analytics, and community
+            oversight.
+          </p>
+          <div class="hero-actions">
+            <a href="signim.html" class="btn-hero-primary">Sign In</a>
+            <a href="create.html" class="btn-hero-outline"
+              >Create Admin Account</a
+            >
+          </div>
+          <div class="trust-badges">
+            <span class="trust-badge"
+              ><i class="fa fa-shield-halved tbadge-icon"></i> SECURE</span
+            >
+            <span class="trust-badge"
+              ><i class="fa fa-lock tbadge-icon"></i> PRIVATE</span
+            >
+            <span class="trust-badge"
+              ><i class="fa fa-circle-check tbadge-icon"></i> VERIFIED</span
+            >
+          </div>
+        </div>
+        <div class="hero-image-col">
+          <img
+            src="counsellor.jpg"
+            alt="Counselor writing notes during a student session"
+            class="hero-img"
+          />
+        </div>
+      </section>
+
+      <!-- ── FEATURES ── -->
+      <section class="features-section" aria-label="Platform features">
+        <div class="section-inner">
+          <p class="section-eyebrow">PLATFORM TOOLS</p>
+          <h2 class="section-title serif">
+            Full access to platform management, user analytics, and community
+            oversight.
+          </h2>
+
+          <div class="features-grid" id="features-section">
+            <div class="feature-card">
+              <div class="feature-icon red-icon">
+                <i class="fa fa-asterisk"></i>
+              </div>
+              <h3>Crisis Management</h3>
+              <p>
+                Receive and respond to crisis alerts immediately. Coordinate
+                with counselors and track escalated cases to ensure student
+                safety across all campuses.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon purple-icon">
+                <i class="fa fa-calendar-days"></i>
+              </div>
+              <h3>Appointments</h3>
+              <p>
+                Manage counselor schedules and student appointments. Oversee
+                booking systems and ensure counselor availability across all
+                partner institutions.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon purple-icon">
+                <i class="fa fa-chart-bar"></i>
+              </div>
+              <h3>Analytics</h3>
+              <p>
+                Analyze user behavior, engagement trends, and platform
+                performance. Export detailed reports for institutional partners
+                and stakeholders.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FOOTER ── -->
+      <footer class="footer" id="footer-section" role="contentinfo">
+        <div class="footer-inner">
+          <div class="footer-brand-col">
+            <div class="footer-logo-row">
+              <img
+                src="logo_web.webp"
+                alt="MindCare Hub"
+                class="footer-logo-img"
+              />
+              <span class="footer-logo serif">MindCare Hub</span>
+            </div>
+            <p class="footer-tagline">
+              The ultimate academic sanctuary for South African students.
+              Empowering minds, one step at a time.
+            </p>
+            <div class="footer-socials">
+              <a
+                href="https://www.facebook.com/share/1EEmWDDj7w/"
+                target="_blank"
+                rel="noopener"
+                class="social-icon"
+                aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="https://x.com/mindcare47"
+                target="_blank"
+                rel="noopener"
+                class="social-icon"
+                aria-label="X"
+                ><i class="fab fa-x-twitter"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/mindcare962?igsh=eWN2MzBqNWNza3pl"
+                target="_blank"
+                rel="noopener"
+                class="social-icon"
+                aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>RESOURCES</h4>
+            <a href="analytics.html">Analytics</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="crisis_alert.html">Crisis Management</a>
+            <a href="signim.html">Find Help</a>
+          </div>
+          <div class="footer-col">
+            <h4>COMPANY</h4>
+            <a href="signim.html">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 MindCare Hub SA. All rights reserved.</span>
+          <span>South Africa &nbsp; 🌐 English</span>
+        </div>
+      </footer>
+    </main>
+
+    <!-- ── HOW IT WORKS OVERLAY ── -->
+    <section
+      id="how-it-works-page"
+      class="hiw-page hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="How It Works"
+    >
+      <div class="hiw-inner">
+        <button
+          class="hiw-back"
+          onclick="closeHowItWorks()"
+          aria-label="Back to landing page"
+        >
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+        <div class="hiw-header">
+          <p class="hiw-eyebrow">ADMIN PORTAL</p>
+          <h2 class="serif">How It Works</h2>
+          <p class="hiw-subtitle">
+            Four simple steps to manage student wellness across your
+            institution.
+          </p>
+        </div>
+        <div class="hiw-steps" role="list">
+          <div class="hiw-step" role="listitem">
+            <div class="hiw-step-num">01</div>
+            <div class="hiw-step-icon"><i class="fa fa-shield-halved"></i></div>
+            <h3>Secure Sign Up</h3>
+            <p>
+              Verify that you are a MindCare administrator or professional. Your
+              credentials are reviewed to ensure student data remains protected
+              at all times.
+            </p>
+          </div>
+          <div class="hiw-connector" aria-hidden="true"></div>
+          <div class="hiw-step" role="listitem">
+            <div class="hiw-step-num">02</div>
+            <div class="hiw-step-icon"><i class="fa fa-heart-pulse"></i></div>
+            <h3>Wellness Check-ins</h3>
+            <p>
+              Complete daily check-ins to monitor student wellbeing and
+              emotional state. Track mood trends and flag students who may need
+              immediate support.
+            </p>
+          </div>
+          <div class="hiw-connector" aria-hidden="true"></div>
+          <div class="hiw-step" role="listitem">
+            <div class="hiw-step-num">03</div>
+            <div class="hiw-step-icon"><i class="fa fa-headset"></i></div>
+            <h3>Smart Support</h3>
+            <p>
+              Book appointments, respond to student needs, and guide them to
+              helpful resources. Coordinate with counselors across all campus
+              locations.
+            </p>
+          </div>
+          <div class="hiw-connector" aria-hidden="true"></div>
+          <div class="hiw-step" role="listitem">
+            <div class="hiw-step-num">04</div>
+            <div class="hiw-step-icon"><i class="fa fa-star"></i></div>
+            <h3>Thrive Always</h3>
+            <p>
+              Provide continuous care and support throughout the student journey
+              — from first year anxiety to graduation day confidence.
+            </p>
+          </div>
+        </div>
+        <div class="hiw-cta">
+          <button class="btn-hero-primary" onclick="closeHowItWorks()">
+            Get Started
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <script src="Admin_Landing.js"></script>
+  </body>
+</html>

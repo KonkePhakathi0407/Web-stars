@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindCare Hub – Admin Sign In</title>
+  <link rel="stylesheet" href="signin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    .admin-badge-header {
+      display: inline-block;
+      background: linear-gradient(135deg, #2E1065, #4C1D95);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e8e8e8;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .hint {
+      color: #c8002b;
+      font-size: 11px;
+      margin-top: 5px;
+      display: none;
+    }
+    .hint.show {
+      display: block;
+    }
+    .error {
+      border-color: #c8002b !important;
+    }
+    .success-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .success-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .success-card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      animation: fadeInUp 0.4s ease;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .success-card svg {
+      width: 64px;
+      height: 64px;
+      color: #10b981;
+      margin-bottom: 20px;
+    }
+    .success-card h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .global-error {
+      color: #c8002b;
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8c-1.5 0-3 .5-3 2s1.5 2 3 2 3 .5 3 2-1.5 2-3 2"/>
+            <line x1="12" y1="6" x2="12" y2="8"/>
+            <line x1="12" y1="16" x2="12" y2="18"/>
+          </svg>
+        </div>
+        <span><em>MindCare Hub</em></span>
+        <span class="admin-badge-header">ADMIN</span>
+      </div>
+
+      <div class="left-content">
+        <h1 class="hero-text">Welcome back,<br>Administrator<span class="dot">.</span></h1>
+        <p class="hero-sub">Access your secure administrative dashboard to manage platform operations and student wellness.</p>
+
+        <ul class="feature-list">
+          <li><div class="feat-icon"></div><div><strong>USER OVERSIGHT</strong><span>Monitor student activity and manage platform access.</span></div></li>
+          <li><div class="feat-icon"></div><div><strong>ANALYTICS DASHBOARD</strong><span>Track engagement trends and wellness outcomes.</span></div></li>
+          <li><div class="feat-icon"></div><div><strong>CRISIS RESPONSE</strong><span>Receive and act on high-priority alerts.</span></div></li>
+          <li><div class="feat-icon"></div><div><strong>SECURE ACCESS</strong><span>Role-based permissions with audit trails.</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <div class="form-container">
+        <div class="secure-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2E1065" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Secure Admin Portal
+        </div>
+
+        <h2 class="form-title">Admin Sign In</h2>
+        <p class="form-subtitle">Access your secure administrative dashboard.</p>
+
+        <form id="adminSigninForm">
+          <div class="field-group">
+            <label for="admin-email">EMAIL ADDRESS</label>
+            <input type="email" id="admin-email" placeholder="admin@mindcare.com" required />
+            <p id="hintEmail" class="hint">Please enter a valid email address</p>
+          </div>
+
+          <div class="field-group">
+            <label for="admin-password">PASSWORD</label>
+            <div class="input-wrapper">
+              <input type="password" id="admin-password" placeholder="••••••••" required />
+              <button class="eye-btn" id="toggle-pw" type="button">
+                <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <p id="hintPassword" class="hint">Password is required</p>
+            <div class="forgot-row">
+              <a href="admin-reset-password.html" class="forgot-link">Forgot password?</a>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="signin-btn" type="submit">SIGN IN</button>
+        </form>
+
+        <div class="divider" style="text-align: center; margin: 20px 0;"><span>OR</span></div>
+        <p class="switch-text">Don't have an admin account? <a href="create.html">Create Admin Account</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Overlay -->
+  <div id="successOverlay" class="success-overlay">
+    <div class="success-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+      <h3>Login Successful!</h3>
+      <p>Redirecting to dashboard...</p>
+    </div>
+  </div>
+
+  <script src="admin-signin.js"></script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crisis Alerts – MindCare Hub</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="crisis_alert.css" />
+  </head>
+  <body>
+    <!-- ══════════ SIDEBAR ══════════ -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-row">
+          <a href="Admin_Landing.html" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:10px;">
+            <img src="logo_web.webp" alt="MindCare Hub Logo" style="width:44px;height:44px;object-fit:contain;flex-shrink:0;mix-blend-mode:luminosity;filter:brightness(1.1);">
+            <div>
+              <div class="brand-name">MindCare Hub <span class="admin-badge">Admin</span></div>
+              <div class="brand-tag">LU Wellness Centre</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-user">
+        <div class="user-avatar">ND</div>
+        <div class="user-info">
+          <div class="user-name">Dr. Nomvula Dlamini</div>
+          <div class="user-role">LU Wellness Centre</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+
+        <a class="nav-item" href="adashboard.html">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+          </svg>
+          Dashboard
+        </a>
+
+        <a class="nav-item active" href="crisis_alert.html">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+            />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          Crisis Alerts
+        </a>
+
+        <a class="nav-item" href="analytics.html">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+          Analytics
+        </a>
+
+        <a class="nav-item" href="appointments.html">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Appointments
+        </a>
+
+        <a class="nav-item" href="settings.html">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"
+            />
+          </svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="logout-btn" id="logoutTrigger">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- ══════════ MAIN ══════════ -->
+    <div class="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-search">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" placeholder="Search alerts or institutions..." />
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="topbar-icon-btn" title="Notifications">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 01-3.46 0" />
+            </svg>
+            <span class="notif-dot"></span>
+          </button>
+          <button class="topbar-icon-btn" title="Help">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </button>
+          <button class="crisis-mode-btn">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+              />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Crisis Mode
+          </button>
+          <div class="admin-profile">
+            <div class="profile-text">
+              <div class="profile-name">Admin Profile</div>
+              <div class="profile-sub">Dr. Nomvula D.</div>
+            </div>
+            <div class="profile-avatar">ND</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <div class="content">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+          <div class="page-header-left">
+            <div class="page-title-row">
+              <h1 class="page-title">Crisis Alerts</h1>
+              <span class="pill red">3 Unreviewed</span>
+              <span class="pill amber">12 This Week</span>
+            </div>
+            <p class="page-sub">
+              Review and manage prioritised intervention requests from partner
+              universities. High severity cases require immediate staff
+              delegation.
+            </p>
+          </div>
+        </div>
+
+        <!-- PRIVACY REMINDER -->
+        <div class="privacy-banner">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          <span
+            ><strong>Privacy Reminder:</strong> Student anonymity is maintained
+            unless a critical life-safety threshold is reached. Access to full
+            profiles is restricted to Level 2 responders.</span
+          >
+        </div>
+
+        <!-- MAIN SPLIT: TABLE + DETAIL PANEL -->
+        <div class="split-layout">
+          <!-- LEFT: TABLE -->
+          <div class="table-section">
+            <!-- FILTER TABS -->
+            <div class="filter-bar">
+              <div class="tab-group">
+                <button class="tab active" data-filter="all">All</button>
+                <button class="tab" data-filter="unreviewed">Unreviewed</button>
+                <button class="tab" data-filter="inprogress">
+                  In Progress
+                </button>
+                <button class="tab" data-filter="resolved">Resolved</button>
+              </div>
+              <div class="filter-controls">
+                <div class="filter-select-wrap">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polygon
+                      points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+                    />
+                  </svg>
+                  <span>Filter by:</span>
+                  <select id="severityFilter">
+                    <option value="all">Severity</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </div>
+                <div class="filter-select-wrap">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                  </svg>
+                  <select id="universityFilter">
+                    <option value="all">All Universities</option>
+                    <option value="uct">University of Cape Town</option>
+                    <option value="wits">
+                      University of the Witwatersrand
+                    </option>
+                    <option value="up">University of Pretoria</option>
+                    <option value="stellenbosch">
+                      Stellenbosch University
+                    </option>
+                    <option value="ukzn">University of KwaZulu-Natal</option>
+                    <option value="uj">University of Johannesburg</option>
+                    <option value="nwu">North-West University</option>
+                    <option value="ufs">University of the Free State</option>
+                    <option value="rhodes">Rhodes University</option>
+                    <option value="unisa">
+                      University of South Africa (UNISA)
+                    </option>
+                    <option value="uwc">University of the Western Cape</option>
+                    <option value="ufh">University of Fort Hare</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-wrapper">
+              <table class="alerts-table">
+                <thead>
+                  <tr>
+                    <th>Severity</th>
+                    <th>Received</th>
+                    <th>University</th>
+                    <th>Type</th>
+                    <th>Keywords</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="alertsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /table-section -->
+
+          <!-- RIGHT: DETAIL PANEL -->
+          <div class="detail-panel" id="detailPanel">
+            <div class="detail-empty" id="detailEmpty">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              <p>Select an alert to view details</p>
+            </div>
+
+            <div
+              class="detail-content"
+              id="detailContent"
+              style="display: none"
+            >
+              <div class="detail-header" id="detailHeader">
+                <div class="detail-title-row">
+                  <span class="detail-title">Alert Details</span>
+                  <span
+                    class="detail-severity-badge"
+                    id="detailSeverityBadge"
+                  ></span>
+                </div>
+                <div class="detail-ref" id="detailRef"></div>
+              </div>
+
+              <div class="detail-body">
+                <div class="detail-section">
+                  <div class="detail-section-label">Flagged Keywords</div>
+                  <div class="keyword-tags" id="keywordTags"></div>
+                </div>
+
+                <div class="detail-section">
+                  <div class="detail-section-label">Source Context</div>
+                  <p class="detail-context-text" id="contextText"></p>
+                </div>
+
+                <div class="detail-section">
+                  <div class="detail-section-label">Internal Staff Notes</div>
+                  <form id="staffNotesForm" novalidate>
+                  <textarea
+                    class="staff-notes"
+                    id="staffNotes"
+                    placeholder="Add a note for the assigned responder..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="detail-actions">
+                <button class="action-btn primary" id="markProgressBtn">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <polyline points="9 11 12 14 22 4" />
+                    <path
+                      d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                    />
+                  </svg>
+                  Mark In Progress
+                </button>
+                <div class="action-btn-row">
+                  <button class="action-btn success" id="resolveBtn">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Resolved
+                  </button>
+                  <button class="action-btn warn" id="escalateBtn">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <polyline points="18 15 12 9 6 15" />
+                    </svg>
+                    Escalate
+                  </button>
+                </div>
+              </div>
+              </form>
+
+              <div class="detail-assign" id="detailAssign">
+                <div class="assign-avatar">G</div>
+                <div class="assign-text">
+                  <div class="assign-name" id="assignName"></div>
+                  <div class="assign-sub">Auto-assigned to Group A</div>
+                </div>
+              </div>
+            </div>
+            <!-- /detail-content -->
+          </div>
+          <!-- /detail-panel -->
+        </div>
+        <!-- /split-layout -->
+      </div>
+      <!-- /content -->
+    </div>
+    <!-- /main -->
+
+    <!-- LOGOUT MODAL -->
+    <div class="modal-overlay" id="logoutModal">
+      <div class="modal">
+        <div class="modal-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </div>
+        <div class="modal-title">Log Out</div>
+        <div class="modal-sub">
+          Are you sure you want to log out of the MindCare Hub Admin Panel?
+        </div>
+        <div class="modal-actions">
+          <button class="btn-cancel" id="cancelLogout">Cancel</button>
+          <button class="btn-logout-confirm">Log Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script src="crisis_alert.js"></script>
+  </body>
+</html>
+

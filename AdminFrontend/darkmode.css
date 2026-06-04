@@ -1,0 +1,150 @@
+/* ============================================================
+   DARK MODE  —  darkmode.css
+   Add <link rel="stylesheet" href="darkmode.css"> in every
+   HTML page's <head>, after your existing CSS links.
+   ============================================================ */
+
+/* ── Dark token overrides ───────────────────────────────────── */
+[data-theme="dark"] {
+  --primary:          #7c3aed;
+  --primary-light:    #2d1b69;
+  --danger:           #f87171;
+  --danger-light:     #450a0a;
+  --danger-bg:        #991b1b;
+  --warning:          #fbbf24;
+  --warning-light:    #451a03;
+  --green:            #34d399;
+  --green-light:      #022c22;
+  --pink:             #f472b6;
+  --pink-light:       #500724;
+  --blue:             #60a5fa;
+  --blue-light:       #1e3a5f;
+  --orange:           #fb923c;
+
+  /* Layout */
+  --sidebar-bg:       #13062e;
+  --sidebar-hover:    #1e0a47;
+  --sidebar-active:   #2d1165;
+
+  /* Text */
+  --text-primary:     #f3f4f6;
+  --text-secondary:   #9ca3af;
+  --text-muted:       #6b7280;
+
+  /* Surfaces */
+  --border:           #2d2d3f;
+  --bg:               #0f0f1a;
+  --card:             #1a1a2e;
+  --shadow:           0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:        0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -1px rgba(0,0,0,0.3);
+}
+
+/* ── Smooth transition on theme switch ──────────────────────── */
+*, *::before, *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
+}
+
+/* ── Dark mode element fixes ────────────────────────────────── */
+
+/* Topbar */
+[data-theme="dark"] .topbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Cards */
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .card,
+[data-theme="dark"] .table-card,
+[data-theme="dark"] .chart-card,
+[data-theme="dark"] .form-container,
+[data-theme="dark"] .settings-card,
+[data-theme="dark"] .modal-box,
+[data-theme="dark"] .panel {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+/* Tables */
+[data-theme="dark"] table thead {
+  background: #1e1e35;
+}
+[data-theme="dark"] table th {
+  color: var(--text-secondary);
+  border-bottom-color: var(--border);
+}
+[data-theme="dark"] table td {
+  border-bottom-color: var(--border);
+  color: var(--text-primary);
+}
+[data-theme="dark"] table tr:hover td {
+  background: #1e1e35;
+}
+
+/* Inputs & selects */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: #1e1e35;
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: var(--text-muted);
+}
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+}
+
+/* Badges / tags */
+[data-theme="dark"] .badge-active   { background: #022c22; color: #34d399; }
+[data-theme="dark"] .badge-inactive { background: #1c1917; color: #a8a29e; }
+[data-theme="dark"] .badge-warning  { background: #451a03; color: #fbbf24; }
+[data-theme="dark"] .badge-danger   { background: #450a0a; color: #f87171; }
+
+/* Crisis banner */
+[data-theme="dark"] .crisis-banner {
+  background: linear-gradient(135deg, #450a0a, #7f1d1d);
+  border-color: #991b1b;
+}
+
+/* Scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #0f0f1a; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #2d2d3f; border-radius: 4px; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: #3d3d55; }
+
+/* ── Toggle button ──────────────────────────────────────────── */
+.dark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--card);
+  white-space: nowrap;
+}
+.dark-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.dark-toggle .toggle-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* Sign-in page dark mode */
+[data-theme="dark"] .page            { background: var(--bg); }
+[data-theme="dark"] .right-panel     { background: #12122a; }
+[data-theme="dark"] .form-container  { background: var(--card); }
+[data-theme="dark"] .left-panel      { background: #13062e; }

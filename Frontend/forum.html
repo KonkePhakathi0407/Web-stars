@@ -1,0 +1,1112 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindCare Hub – Community Forum</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+    <script src="utils/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/forum.css" />
+    <style>
+      /* ── Comments ── */
+      .comments-section {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+      .comment-input-area {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      .comment-input-area input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text-dark);
+        font-family: "DM Sans", sans-serif;
+      }
+      .comment-input-area button {
+        padding: 10px 20px;
+        background: #5b3ec8;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 600;
+      }
+      .comment {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .comment-author {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+      .comment-content {
+        font-size: 13px;
+        color: var(--text-mid);
+        margin-top: 4px;
+      }
+      .comment-date {
+        font-size: 10px;
+        color: var(--text-light);
+        margin-top: 4px;
+      }
+      .loading-posts {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-light);
+      }
+
+      /* ── Daily check-in banner ── */
+      .checkin-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(135deg, #f0ebff 0%, #e8f0ff 100%);
+        border: 1px solid #d8ccff;
+        border-radius: 14px;
+        padding: 14px 20px;
+        margin-bottom: 22px;
+        gap: 14px;
+      }
+      .checkin-banner-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .checkin-icon {
+        font-size: 22px;
+        color: #5b3ec8;
+      }
+      .checkin-text strong {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-dark);
+        display: block;
+      }
+      .checkin-text span {
+        font-size: 12px;
+        color: var(--text-mid);
+      }
+      .checkin-btn {
+        background: #5b3ec8;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: 12px;
+        font-weight: 700;
+        font-family: "DM Sans", sans-serif;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.15s;
+      }
+      .checkin-btn:hover {
+        background: #7c4fd4;
+      }
+      .checkin-dismiss {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-light);
+        font-size: 20px;
+        line-height: 1;
+        padding: 2px 6px;
+        border-radius: 4px;
+        transition: background 0.15s;
+      }
+      .checkin-dismiss:hover {
+        background: rgba(0, 0, 0, 0.06);
+      }
+
+      /* ── Sort bar ── */
+      .sort-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+      .sort-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-right: 4px;
+      }
+      .sort-btn {
+        border: 1.5px solid var(--border);
+        background: var(--white);
+        border-radius: 20px;
+        padding: 5px 14px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-mid);
+        font-family: "DM Sans", sans-serif;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .sort-btn:hover {
+        border-color: #5b3ec8;
+        color: #5b3ec8;
+      }
+      .sort-btn.active {
+        background: #5b3ec8;
+        border-color: #5b3ec8;
+        color: white;
+        font-weight: 700;
+      }
+
+      /* ── Reactions ── */
+      .reactions-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        padding-top: 10px;
+        flex-wrap: wrap;
+      }
+      .reaction-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border: 1.5px solid var(--border);
+        background: var(--white);
+        border-radius: 20px;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-mid);
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.15s;
+        user-select: none;
+      }
+      .reaction-btn:hover {
+        border-color: #5b3ec8;
+        background: #f0ebff;
+        color: #5b3ec8;
+        transform: scale(1.06);
+      }
+      .reaction-btn.reacted {
+        border-color: #5b3ec8;
+        background: #f0ebff;
+        color: #5b3ec8;
+      }
+      .reaction-icon {
+        font-size: 14px;
+      }
+
+      /* ── TW blur ── */
+      .tw-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        color: #856404;
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: 0.04em;
+      }
+      .tw-blurred {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+        transition: filter 0.3s;
+      }
+      .tw-reveal-wrap {
+        position: relative;
+        cursor: pointer;
+      }
+      .tw-reveal-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: #856404;
+        background: rgba(255, 243, 205, 0.4);
+        border-radius: 6px;
+        border: 1px dashed #ffc107;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      /* ── Pagination ── */
+      .pagination-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+      }
+      .page-btn {
+        border: 1.5px solid var(--border);
+        background: var(--white);
+        border-radius: 8px;
+        padding: 7px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-mid);
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.15s;
+        min-width: 38px;
+        text-align: center;
+      }
+      .page-btn:hover:not(:disabled) {
+        border-color: #5b3ec8;
+        color: #5b3ec8;
+      }
+      .page-btn.active {
+        background: #5b3ec8;
+        border-color: #5b3ec8;
+        color: white;
+      }
+      .page-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      /* ── Report button ── */
+      .report-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-light);
+        font-size: 12px;
+        font-weight: 500;
+        font-family: "DM Sans", sans-serif;
+        padding: 6px 8px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .report-btn:hover {
+        background: #fff0f0;
+        color: #c8002b;
+      }
+
+      /* ── Share button ── */
+      .share-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-light);
+        font-size: 12px;
+        font-weight: 500;
+        font-family: "DM Sans", sans-serif;
+        padding: 6px 8px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .share-btn:hover {
+        background: var(--purple-xlight);
+        color: #5b3ec8;
+      }
+      .share-toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1a1a2e;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 13px;
+        font-weight: 600;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
+      .share-toast.visible {
+        opacity: 1;
+      }
+
+      /* ── Bookmark active ── */
+      .bookmark-btn.saved svg {
+        fill: #5b3ec8;
+        stroke: #5b3ec8;
+      }
+
+      /* ── Delete btn ── */
+      .delete-btn {
+        color: #c8002b;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        font-family: "DM Sans", sans-serif;
+        padding: 6px 8px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: background 0.15s;
+      }
+      .delete-btn:hover {
+        background: #fff0f0;
+      }
+
+      /* ── Anon toggle ── */
+      .anon-toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--purple-xlight);
+        border-radius: 10px;
+        padding: 12px 16px;
+        gap: 12px;
+      }
+      .anon-toggle-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--purple-sidebar-active);
+        flex: 1;
+      }
+      .anon-toggle-desc {
+        font-size: 11px;
+        color: var(--text-light);
+        margin-top: 2px;
+      }
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #ccc;
+        border-radius: 24px;
+        transition: 0.25s;
+      }
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: 0.25s;
+      }
+      .toggle-switch input:checked + .toggle-slider {
+        background: #5b3ec8;
+      }
+      .toggle-switch input:checked + .toggle-slider:before {
+        transform: translateX(20px);
+      }
+      .anon-toggle-row.is-named {
+        background: #f0f0f8;
+      }
+      .anon-toggle-row.is-named .anon-toggle-label {
+        color: var(--text-mid);
+      }
+
+      /* ── TW toggle in modal ── */
+      .tw-toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1.5px solid #ffc107;
+        background: #fffdf0;
+        border-radius: 10px;
+        padding: 10px 14px;
+        gap: 12px;
+      }
+      .tw-toggle-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #856404;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .tw-toggle-desc {
+        font-size: 11px;
+        color: #a07800;
+        margin-top: 2px;
+      }
+      .tw-toggle-row .toggle-switch input:checked + .toggle-slider {
+        background: #e6a800;
+      }
+
+      /* ── Report modal ── */
+      .report-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(26, 26, 46, 0.55);
+        z-index: 300;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .report-modal-overlay.open {
+        display: flex;
+      }
+      .report-modal {
+        background: var(--white);
+        border-radius: 16px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+        animation: modalIn 0.22s ease;
+      }
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .report-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 20px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .report-modal-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+      .report-modal-close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-light);
+        font-size: 22px;
+        line-height: 1;
+      }
+      .report-modal-body {
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .report-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-mid);
+        transition: all 0.15s;
+        background: var(--white);
+        font-family: "DM Sans", sans-serif;
+        text-align: left;
+        width: 100%;
+      }
+      .report-option:hover {
+        border-color: #c8002b;
+        color: #c8002b;
+        background: #fff0f0;
+      }
+      .report-option.selected {
+        border-color: #c8002b;
+        color: #c8002b;
+        background: #fff0f0;
+        font-weight: 700;
+      }
+      .report-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 14px 20px 18px;
+        border-top: 1px solid var(--border);
+      }
+      .report-cancel-btn {
+        background: none;
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 18px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: "DM Sans", sans-serif;
+        color: var(--text-mid);
+        cursor: pointer;
+      }
+      .report-submit-btn {
+        background: #c8002b;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 9px 18px;
+        font-size: 13px;
+        font-weight: 700;
+        font-family: "DM Sans", sans-serif;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .report-submit-btn:hover {
+        background: #a5001f;
+      }
+
+      /* ── Empty state ── */
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-light);
+      }
+      .empty-state-icon {
+        font-size: 40px;
+        margin-bottom: 14px;
+      }
+      .empty-state h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-mid);
+        margin-bottom: 6px;
+      }
+      .empty-state p {
+        font-size: 13px;
+      }
+
+      /* ── Post secondary actions row ── */
+      .post-secondary-actions {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+
+      /* ── Icon sizing helpers ── */
+      .ti {
+        font-size: 16px;
+        vertical-align: -2px;
+      }
+      .ti-lg {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">MindCare Hub</div>
+        <div class="brand-sub">Academic Support</div>
+      </div>
+     <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="mood.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+          Mood Tracker and AI
+        </a>
+        <a href="journal.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          Journal
+        </a>
+        <a href="findhelp.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Find Help
+        </a>
+        <a href="crisis.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          Crisis Centre
+        </a>
+        <a href="bookings.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Bookings
+        </a>
+        <a href="forum.html" class="nav-item active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          Forum
+        </a>
+        <a href="games.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="8" width="20" height="10" rx="3" />
+            <line x1="7" y1="13" x2="7" y2="13" />
+            <line x1="7" y1="11" x2="7" y2="15" />
+            <line x1="5" y1="13" x2="9" y2="13" />
+            <circle cx="15" cy="12" r="0.8" fill="currentColor" />
+            <circle cx="17" cy="14" r="0.8" fill="currentColor" />
+          </svg>
+          Games
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+          </svg>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="logout.html" class="sidebar-link">Logout</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="page-body">
+        <div class="forum-layout">
+          <div class="forum-main">
+            <!-- Daily check-in banner -->
+            <div class="checkin-banner" id="checkinBanner">
+              <div class="checkin-banner-left">
+                <div class="checkin-icon">
+                  <i class="ti ti-mood-smile ti-lg" aria-hidden="true"></i>
+                </div>
+                <div class="checkin-text">
+                  <strong>How are you feeling today?</strong>
+                  <span
+                    >A quick check-in can help you track your wellbeing over
+                    time.</span
+                  >
+                </div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  flex-shrink: 0;
+                "
+              >
+                <button
+                  class="checkin-btn"
+                  onclick="window.location.href = 'mood.html'"
+                >
+                  Check In
+                </button>
+                <button
+                  class="checkin-dismiss"
+                  id="checkinDismiss"
+                  title="Dismiss"
+                  aria-label="Dismiss check-in banner"
+                >
+                  <i class="ti ti-x"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="forum-title-row">
+              <h1 class="forum-title">Community Forum</h1>
+              <div class="forum-meta-row">
+                <span class="forum-meta-badge">Moderated · Safe</span>
+                <span class="forum-meta-sep">•</span> 
+                <span class="peers-online" id="peersOnline">Loading...</span>
+              </div>
+            </div>
+
+            <div class="filters-row">
+              <div class="filter-pills">
+                <button class="pill active" data-filter="all">All</button>
+                <button class="pill" data-filter="academic">Academic</button>
+                <button class="pill" data-filter="loneliness">
+                  Loneliness
+                </button>
+                <button class="pill" data-filter="career">Career</button>
+                <button class="pill" data-filter="social">Social</button>
+              </div>
+              <button class="new-post-btn" id="newPostBtn">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2.5"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                New Post
+              </button>
+            </div>
+
+            <!-- Sort bar -->
+            <div class="sort-bar">
+              <span class="sort-label">Sort:</span>
+              <button class="sort-btn active" data-sort="recent">
+                Most Recent
+              </button>
+              <button class="sort-btn" data-sort="helpful">Most Helpful</button>
+              <button class="sort-btn" data-sort="commented">
+                Most Commented
+              </button>
+              <button class="sort-btn" data-sort="trending">Trending</button>
+            </div>
+
+            <div class="posts-feed" id="postsFeed">
+              <div class="loading-posts">Loading posts...</div>
+            </div>
+
+            <!-- Pagination -->
+            <div
+              class="pagination-row"
+              id="paginationRow"
+              style="display: none"
+            ></div>
+          </div>
+
+          <aside class="forum-sidebar">
+            <div class="search-box">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#7a7a9a"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search discussions..."
+                id="searchInput"
+              />
+            </div>
+
+            <div class="forum-widget">
+              <div class="widget-title-row">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#5b3ec8"
+                  stroke-width="2"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <h3 class="widget-title">COMMUNITY GUIDELINES</h3>
+              </div>
+              <ul class="guidelines-list">
+                <li>
+                  Be kind and respectful this is a safe, supportive space for
+                  everyone.
+                </li>
+                <li>
+                  You may post anonymously or as yourself your comfort matters.
+                </li>
+                <li>
+                  Add a trigger warning [TW] when discussing sensitive topics
+                  like self-harm.
+                </li>
+                <li>
+                  No harassment, hate speech, or personal attacks of any kind.
+                </li>
+                <li>
+                  Use the Report button for any content that feels unsafe or
+                  harmful.
+                </li>
+              </ul>
+            </div>
+
+            <div class="crisis-widget">
+              <div class="crisis-widget-bar"></div>
+              
+              </div>
+            </div>
+
+            <div class="forum-widget">
+              <h3 class="widget-title trending-title">TRENDING TOPICS</h3>
+              <div class="trending-tags">
+                <button class="tag-pill" data-filter="academic">
+                  #ExamStress
+                </button>
+                <button class="tag-pill" data-filter="academic">
+                  #ThesisGrind
+                </button>
+                <button class="tag-pill" data-filter="social">
+                  #SleepHygiene
+                </button>
+                <button class="tag-pill" data-filter="loneliness">
+                  #FirstYear
+                </button>
+                <button class="tag-pill" data-filter="social">
+                  #SocialAnxiety
+                </button>
+              </div>
+            </div>
+
+            <!-- Saved posts sidebar widget -->
+            <div class="forum-widget" id="savedWidget" style="display: none">
+              <div class="widget-title-row">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#5b3ec8"
+                  stroke-width="2"
+                >
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+                <h3 class="widget-title">SAVED POSTS</h3>
+              </div>
+              <div id="savedPostsList"></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <!-- NEW POST MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title">New Post</h2>
+          <button class="modal-close" id="modalClose" aria-label="Close modal">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="anon-toggle-row" id="anonToggleRow">
+            <div>
+              <div class="anon-toggle-label">
+                <i class="ti ti-shield" aria-hidden="true"></i>
+                <span id="anonStatusText">Post Anonymously</span>
+              </div>
+              <div class="anon-toggle-desc" id="anonStatusDesc">
+                Your name will not be shown on this post.
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="anonToggle" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="tw-toggle-row">
+            <div>
+              <div class="tw-toggle-label">
+                <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+                Trigger Warning
+              </div>
+              <div class="tw-toggle-desc">
+                Toggle on if your post discusses sensitive topics (self-harm,
+                trauma, etc.)
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="twToggle" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <select class="modal-select" id="postCategory">
+            <option value="">Select a category…</option>
+            <option value="academic">Academic</option>
+            <option value="loneliness">Loneliness</option>
+            <option value="career">Career</option>
+            <option value="social">Social</option>
+            <option value="self-care">Self-Care</option>
+            <option value="recovery">Recovery</option>
+            <option value="resources">Resources</option>
+          </select>
+          <input
+            type="text"
+            class="modal-input"
+            id="postTitle"
+            placeholder="Post title…"
+            maxlength="100"
+          />
+          <textarea
+            class="modal-textarea"
+            id="postBody"
+            placeholder="Share what's on your mind. You are safe here…"
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-cancel" id="modalCancel">Cancel</button>
+          <button class="modal-submit" id="modalSubmit">
+            <span id="submitBtnText">Post Anonymously</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT MODAL -->
+    <div class="report-modal-overlay" id="reportModalOverlay">
+      <div class="report-modal">
+        <div class="report-modal-header">
+          <span class="report-modal-title">Report Post</span>
+          <button
+            class="report-modal-close"
+            id="reportModalClose"
+            aria-label="Close report modal"
+          >
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="report-modal-body">
+          <p
+            style="font-size: 13px; color: var(--text-mid); margin-bottom: 4px"
+          >
+            Why are you reporting this post?
+          </p>
+          <button
+            class="report-option"
+            data-reason="Harmful or dangerous content"
+          >
+            <i class="ti ti-alert-octagon" aria-hidden="true"></i>
+            Harmful or dangerous content
+          </button>
+          <button class="report-option" data-reason="Harassment or bullying">
+            <i class="ti ti-mood-angry" aria-hidden="true"></i>
+            Harassment or bullying
+          </button>
+          <button
+            class="report-option"
+            data-reason="Misinformation or false advice"
+          >
+            <i class="ti ti-circle-x" aria-hidden="true"></i>
+            Misinformation or false advice
+          </button>
+          <button class="report-option" data-reason="Spam or off-topic">
+            <i class="ti ti-trash" aria-hidden="true"></i>
+            Spam or off-topic
+          </button>
+          <button class="report-option" data-reason="Other">
+            <i class="ti ti-message-circle" aria-hidden="true"></i>
+            Other
+          </button>
+        </div>
+        <div class="report-modal-footer">
+          <button class="report-cancel-btn" id="reportCancelBtn">Cancel</button>
+          <button class="report-submit-btn" id="reportSubmitBtn">
+            Submit Report
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share toast -->
+    <div class="share-toast" id="shareToast">
+      <i class="ti ti-link" aria-hidden="true"></i>
+      Link copied to clipboard!
+    </div>
+
+    <script src="javascript/forum.js"></script>
+    <script>
+      // Anon toggle UI
+      const anonToggle = document.getElementById("anonToggle");
+      const anonToggleRow = document.getElementById("anonToggleRow");
+      const anonStatusText = document.getElementById("anonStatusText");
+      const anonStatusDesc = document.getElementById("anonStatusDesc");
+      const submitBtnText = document.getElementById("submitBtnText");
+      function updateAnonUI() {
+        const isAnon = anonToggle.checked;
+        anonToggleRow.classList.toggle("is-named", !isAnon);
+        anonStatusText.textContent = isAnon
+          ? "Post Anonymously"
+          : "Post as Yourself";
+        anonStatusDesc.textContent = isAnon
+          ? "Your name will not be shown on this post."
+          : "Your display name will be visible on this post.";
+        submitBtnText.textContent = isAnon
+          ? "Post Anonymously"
+          : "Post as Yourself";
+      }
+      anonToggle.addEventListener("change", updateAnonUI);
+      updateAnonUI();
+
+      // Check-in banner dismiss
+      const checkinBanner = document.getElementById("checkinBanner");
+      if (sessionStorage.getItem("checkinDismissed"))
+        checkinBanner.style.display = "none";
+      document
+        .getElementById("checkinDismiss")
+        .addEventListener("click", () => {
+          checkinBanner.style.display = "none";
+          sessionStorage.setItem("checkinDismissed", "1");
+        });
+    </script>
+  </body>
+</html>

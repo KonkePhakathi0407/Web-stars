@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindCare Hub – Create Admin Account</title>
+  <script src="../utils/theme.js"></script>
+  <link rel="stylesheet" href="signup.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8c-1.5 0-3 .5-3 2s1.5 2 3 2 3 .5 3 2-1.5 2-3 2"/>
+            <line x1="12" y1="6" x2="12" y2="8"/>
+            <line x1="12" y1="16" x2="12" y2="18"/>
+          </svg>
+        </div>
+        <span><em>MindCare Hub</em></span>
+        <span class="admin-badge-header">ADMIN</span>
+      </div>
+
+      <div class="left-content">
+        <h1 class="hero-text">Administrative<br>Control Centre<span class="dot"></span></h1>
+        <p class="hero-sub">Manage platform operations, oversee student wellness, and drive institutional mental health outcomes.</p>
+
+        <ul class="check-list">
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Full platform oversight
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Real-time analytics
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Crisis management tools
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            User & counselor management
+          </li>
+          <li>
+            <span class="check">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Secure audit trails
+          </li>
+        </ul>
+      </div>
+
+      <!-- Decorative blobs -->
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <div class="form-container">
+        <h2 class="form-title">Create Admin Account</h2>
+        <p class="form-subtitle">Secure access to the administrative dashboard.</p>
+
+        <form id="adminSignupForm" novalidate>
+
+          <!-- Admin Notice -->
+          <div class="admin-notice">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2E1065" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>This account will have administrative privileges. Please verify your credentials carefully.</span>
+          </div>
+
+          <div class="name-row">
+            <div class="field-group">
+              <label for="first-name">FIRST NAME</label>
+              <input type="text" id="first-name" name="first_name" placeholder="First Name" autocomplete="given-name" required />
+            </div>
+            <div class="field-group">
+              <label for="last-name">LAST NAME</label>
+              <input type="text" id="last-name" name="last_name" placeholder="Last Name" autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="username">USERNAME</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input type="text" id="username" name="username" placeholder="username" autocomplete="username" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="email">EMAIL ADDRESS</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+              </span>
+              <input type="email" id="email" name="email" placeholder="admin@university.ac.za" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="institution">INSTITUTION</label>
+            <div class="input-wrapper select-wrap">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </span>
+              <select id="institution" name="institution" required>
+                <option value="" disabled selected>Select your institution</option>
+                <option value="University of Johannesburg">University of Johannesburg</option>
+                <option value="University of Pretoria">University of Pretoria</option>
+                <option value="Wits University">Wits University</option>
+                <option value="UNISA">UNISA</option>
+                <option value="Rhodes University">Rhodes University</option>
+                <option value="UCT">UCT</option>
+                <option value="Stellenbosch University">Stellenbosch University</option>
+                <option value="UKZN">UKZN</option>
+                <option value="North-West University">North-West University</option>
+              </select>
+              <span class="select-arrow">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- ADMIN ROLE DROPDOWN -->
+          <div class="field-group">
+            <label for="admin-role">ADMINISTRATIVE ROLE</label>
+            <div class="input-wrapper select-wrap">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </span>
+              <select id="admin-role" name="admin_role" required>
+                <option value="" disabled selected>Select administrative role</option>
+                <option value="super_admin">Super Administrator — Full system access</option>
+                <option value="platform_admin">Platform Administrator — Manage platform settings</option>
+                <option value="counselor_manager">Counselor Manager — Manage counselors & appointments</option>
+                <option value="content_moderator">Content Moderator — Moderate forum content</option>
+                <option value="analytics_viewer">Analytics Viewer — View-only analytics access</option>
+              </select>
+              <span class="select-arrow">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </div>
+            <div class="field-note">Role determines what features and data you can access.</div>
+          </div>
+
+          <div class="field-group">
+            <label for="employee-id">EMPLOYEE / STAFF ID (Optional)</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input type="text" id="employee-id" name="employee_id" placeholder="Enter your staff/employee ID" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="department">DEPARTMENT (Optional)</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              </span>
+              <input type="text" id="department" name="department" placeholder="e.g., Student Affairs, Wellness Centre" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="password">PASSWORD</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input type="password" id="password" name="password" placeholder="••••••••••••" autocomplete="new-password" required />
+              <button class="eye-btn" data-target="password" type="button" aria-label="Show password">
+                <svg class="eye-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <div class="strength-bar" id="strength-bar">
+              <div class="strength-fill" id="strength-fill"></div>
+            </div>
+            <p class="strength-label" id="strength-label"></p>
+          </div>
+
+          <div class="field-group">
+            <label for="confirm-password">CONFIRM PASSWORD</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input type="password" id="confirm-password" name="confirm_password" placeholder="••••••••••••" autocomplete="new-password" required />
+              <button class="eye-btn" data-target="confirm-password" type="button" aria-label="Show password">
+                <svg class="eye-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="signup-btn" type="submit">CREATE ADMIN ACCOUNT</button>
+          <p class="switch-text">Already have an admin account? <a href="signim.html">Sign in</a></p>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Password strength meter
+    const passwordInput = document.getElementById('password');
+    const strengthFill = document.getElementById('strength-fill');
+    const strengthLabel = document.getElementById('strength-label');
+    const strengthBar = document.getElementById('strength-bar');
+    
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      let strength = 0;
+      let label = '';
+      let color = '';
+      let percent = 0;
+      
+      if (password.length >= 8) strength++;
+      if (password.length >= 12) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+      
+      if (password.length > 0) {
+        strengthBar.style.display = 'block';
+        strengthLabel.style.display = 'block';
+      } else {
+        strengthBar.style.display = 'none';
+        strengthLabel.style.display = 'none';
+      }
+      
+      switch(strength) {
+        case 0:
+        case 1:
+          label = 'Weak';
+          color = '#dc2626';
+          percent = 25;
+          break;
+        case 2:
+          label = 'Fair';
+          color = '#f59e0b';
+          percent = 50;
+          break;
+        case 3:
+          label = 'Good';
+          color = '#2563eb';
+          percent = 75;
+          break;
+        case 4:
+        case 5:
+          label = 'Strong';
+          color = '#10b981';
+          percent = 100;
+          break;
+      }
+      
+      strengthFill.style.width = percent + '%';
+      strengthFill.style.background = color;
+      strengthLabel.textContent = password ? label : '';
+      strengthLabel.style.color = color;
+    });
+    
+    // Password visibility toggles
+    document.querySelectorAll('.eye-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (input) {
+          input.type = input.type === 'password' ? 'text' : 'password';
+        }
+      });
+    });
+    
+    // Form submission
+    const signupBtn = document.getElementById('signup-btn');
+    const signupForm = document.getElementById('adminSignupForm');
+    
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const firstName = document.getElementById('first-name').value.trim();
+      const lastName = document.getElementById('last-name').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const institution = document.getElementById('institution').value;
+      const adminRole = document.getElementById('admin-role').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      
+      // Validation
+      if (!firstName || !lastName) {
+        alert('Please enter your full name');
+        return;
+      }
+      
+      if (!username) {
+        alert('Please enter a username');
+        return;
+      }
+      
+      if (!email) {
+        alert('Please enter your email');
+        return;
+      }
+      
+      if (!institution) {
+        alert('Please select your institution');
+        return;
+      }
+      
+      if (!adminRole) {
+        alert('Please select an administrative role');
+        return;
+      }
+      
+      if (!password) {
+        alert('Please enter a password');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+      
+      if (password.length < 8) {
+        alert('Password must be at least 8 characters');
+        return;
+      }
+      
+      signupBtn.disabled = true;
+      signupBtn.textContent = 'CREATING ACCOUNT...';
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/admin/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+            first_name: firstName,
+            last_name: lastName,
+            role: adminRole,
+            institution: institution
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          alert('✅ Admin account created successfully!\n\nPlease sign in with your credentials.');
+          window.location.href = 'signim.html';
+        } else {
+          alert('❌ ' + data.message);
+          signupBtn.disabled = false;
+          signupBtn.textContent = 'CREATE ADMIN ACCOUNT';
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        alert('❌ Connection error. Make sure the backend is running on port 3001');
+        signupBtn.disabled = false;
+        signupBtn.textContent = 'CREATE ADMIN ACCOUNT';
+      }
+    });
+  </script>
+
+</body>
+</html>

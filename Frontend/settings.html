@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindCare Hub – Settings & Privacy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
+    <script src="utils/theme.js"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/settings.css" />
+   
+    <style>
+        /* Additional styles for profile picture */
+        .profile-picture-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .profile-picture-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid #5b3ec8;
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            background: #eee9ff;
+            color: #5b3ec8;
+        }
+        .profile-picture-actions {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+        .upload-pic-btn {
+            background: #5b3ec8;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+            border: none;
+        }
+        .upload-pic-btn:hover {
+            background: #4a2fa8;
+        }
+        .remove-pic-btn {
+            background: #fee2e2;
+            color: #c8002b;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .remove-pic-btn:hover {
+            background: #fecaca;
+        }
+        .toast.show.info {
+            background: #5b3ec8;
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo">MindCare Hub</div>
+            <div class="brand-sub">Academic Support</div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                </svg>
+                Dashboard
+            </a>
+            <a href="mood.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+                Mood Tracker and AI
+            </a>
+            <a href="journal.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
+                Journal
+            </a>
+            <a href="findhelp.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                </svg>
+                Find Help
+            </a>
+            <a href="crisis.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                Crisis Centre
+            </a>
+            <a href="bookings.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Bookings
+            </a>
+            <a href="forum.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                Forum
+            </a>
+            <a href="games.html" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="8" width="20" height="10" rx="3" />
+                    <line x1="7" y1="11" x2="7" y2="15" />
+                    <line x1="5" y1="13" x2="9" y2="13" />
+                    <circle cx="15" cy="12" r="0.8" fill="currentColor" />
+                    <circle cx="17" cy="14" r="0.8" fill="currentColor" />
+                </svg>
+                Games
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+                </svg>
+                Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="index.html" class="sidebar-link">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                Logout
+            </a>
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="page-body">
+            <div class="page-header">
+                <h1 class="page-title">Settings &amp; Privacy</h1>
+                <p class="page-sub">You are in full control of your data.</p>
+            </div>
+
+            <div class="settings-grid">
+                <!-- LEFT COLUMN -->
+                <div class="left-col">
+                    <!-- Privacy Controls -->
+                    <div class="settings-card">
+                        <div class="card-title-row">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b3ec8" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                            <h2 class="card-title">Privacy Controls</h2>
+                        </div>
+                        <div class="toggle-row">
+                            <div class="toggle-info">
+                                <div class="toggle-label">Anonymous Mode</div>
+                                <div class="toggle-desc">Hide your identity in university forums</div>
+                            </div>
+                            <button class="toggle-btn on" data-toggle="anon" role="switch" aria-checked="true">
+                                <span class="toggle-thumb"></span>
+                            </button>
+                        </div>
+                        <div class="toggle-row">
+                            <div class="toggle-info">
+                                <div class="toggle-label">Campus Alerts</div>
+                                <div class="toggle-desc">Share wellness data with student services</div>
+                            </div>
+                            <button class="toggle-btn" data-toggle="alerts" role="switch" aria-checked="false">
+                                <span class="toggle-thumb"></span>
+                            </button>
+                        </div>
+                        <div class="toggle-row">
+                            <div class="toggle-info">
+                                <div class="toggle-label">AI Analysis</div>
+                                <div class="toggle-desc">Allow AI to provide personalized insights</div>
+                            </div>
+                            <button class="toggle-btn on" data-toggle="ai" role="switch" aria-checked="true">
+                                <span class="toggle-thumb"></span>
+                            </button>
+                        </div>
+                        <div class="toggle-row" style="border-bottom: none; padding-bottom: 0">
+                            <div class="toggle-info">
+                                <div class="toggle-label">Crisis Detection</div>
+                                <div class="toggle-desc">Automated monitoring for urgent support</div>
+                            </div>
+                            <button class="toggle-btn on" data-toggle="crisis" role="switch" aria-checked="true">
+                                <span class="toggle-thumb"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h2 class="card-title" style="margin-bottom: 18px">Legal &amp; Transparency</h2>
+                        <button class="legal-item" id="privacyBtn">
+                            <span>Privacy Policy</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </button>
+                        <button class="legal-item" id="tosBtn">
+                            <span>Terms of Service</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </button>
+                        <button class="legal-item" id="popiaBtn" style="border-bottom: none">
+                            <span>POPIA Notice</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Theme Settings -->
+                    <div class="settings-card">
+                        <div class="card-title-row">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b3ec8" stroke-width="2">
+                                <circle cx="12" cy="12" r="5" />
+                                <line x1="12" y1="1" x2="12" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="23" />
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                <line x1="1" y1="12" x2="3" y2="12" />
+                                <line x1="21" y1="12" x2="23" y2="12" />
+                            </svg>
+                            <h2 class="card-title">Theme Settings</h2>
+                        </div>
+                        <div class="theme-btns">
+                            <button class="theme-btn active" id="lightModeBtn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="5" />
+                                    <line x1="12" y1="1" x2="12" y2="3" />
+                                    <line x1="12" y1="21" x2="12" y2="23" />
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                    <line x1="1" y1="12" x2="3" y2="12" />
+                                    <line x1="21" y1="12" x2="23" y2="12" />
+                                </svg>
+                                Light Mode
+                            </button>
+                            <button class="theme-btn" id="darkModeBtn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                                </svg>
+                                Dark Mode
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="right-col">
+                    <!-- Account Settings -->
+                    <div class="settings-card">
+                        <div class="card-title-row">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b3ec8" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <h2 class="card-title">Account Settings</h2>
+                        </div>
+
+                        <!-- Profile Picture Section -->
+                        <div class="profile-picture-section">
+                            <div class="profile-picture-container">
+                                <div class="profile-avatar" id="profileAvatar">
+                                    <img id="profileImage" src="" alt="Profile Picture" style="display: none;">
+                                    <div class="avatar-placeholder" id="avatarPlaceholder">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#5b3ec8" stroke-width="1.5">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                </div>
+                                </div>
+                                <div class="profile-picture-actions">
+                                    <label class="upload-pic-btn" for="profilePictureUpload">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                            <circle cx="12" cy="13" r="4"/>
+                                        </svg>
+                                        Change Photo
+                                    </label>
+                                    <input type="file" id="profilePictureUpload" accept="image/*" style="display: none;">
+                                    <button class="remove-pic-btn" id="removePicBtn" style="display: none;">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Name Fields -->
+                        <div class="form-row two-col">
+                            <div class="form-group">
+                                <label class="form-label">FIRST NAME</label>
+                                <input type="text" class="form-input" id="firstNameInput" placeholder="First Name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">LAST NAME</label>
+                                <input type="text" class="form-input" id="lastNameInput" placeholder="Last Name">
+                            </div>
+                        </div>
+
+                        <div class="form-row two-col">
+                            <div class="form-group">
+                                <label class="form-label">UNIVERSITY</label>
+                                <input type="text" class="form-input" id="universityInput">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ACADEMIC YEAR</label>
+                                <div class="select-wrap">
+                                    <select class="form-select" id="yearSelect">
+                                        <option>1st Year</option>
+                                        <option>2nd Year</option>
+                                        <option selected>3rd Year</option>
+                                        <option>4th Year</option>
+                                        <option>Honours</option>
+                                        <option>Masters</option>
+                                        <option>PhD</option>
+                                    </select>
+                                    <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">INSTITUTIONAL EMAIL</label>
+                            <input type="email" class="form-input" id="emailInput">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">PASSWORD</label>
+                            <div class="password-wrap">
+                                <input type="password" class="form-input password-input" id="passwordInput" placeholder="••••••••">
+                                <button class="change-pw-btn" id="changePwBtn">Change</button>
+                            </div>
+                        </div>
+
+                        <div class="notif-section">
+                            <h3 class="notif-title">Notification Preferences</h3>
+                            <label class="checkbox-row">
+                                <input type="checkbox" id="cb-email" checked>
+                                <span class="checkbox-box"></span>
+                                <span class="checkbox-label">Email summary of mood trends</span>
+                            </label>
+                            <label class="checkbox-row">
+                                <input type="checkbox" id="cb-push" checked>
+                                <span class="checkbox-box"></span>
+                                <span class="checkbox-label">Push notifications for AI Insights</span>
+                            </label>
+                            <label class="checkbox-row">
+                                <input type="checkbox" id="cb-forum">
+                                <span class="checkbox-box"></span>
+                                <span class="checkbox-label">Forum reply alerts</span>
+                            </label>
+                        </div>
+
+                        <button class="save-btn" id="saveBtn">Save Changes</button>
+                    </div>
+
+                    <div class="settings-card data-card">
+                        <div class="data-left">
+                            <h2 class="data-title">Delete Account</h2>
+                            <p class="data-desc">
+                               If you delete account you will lose all your data
+                            </p>
+                        </div>
+                        <div class="data-actions">
+                           
+                            <button class="delete-acct-btn" id="deleteBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6" />
+                                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                    <path d="M10 11v6" />
+                                    <path d="M14 11v6" />
+                                </svg>
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- LEGAL MODAL -->
+    <div class="modal-overlay" id="legalModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="legalModalTitle">Privacy Policy</h2>
+                <button class="modal-close" id="legalModalClose">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="legalModalBody"></div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRM MODAL -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal modal-danger">
+            <div class="modal-header">
+                <h2 class="modal-title">Delete Account</h2>
+                <button class="modal-close" id="deleteModalClose">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="danger-icon">⚠️</div>
+                <p style="font-size: 15px; color: #1a1a2e; font-weight: 600; margin-bottom: 10px;">
+                    This action is permanent and cannot be undone.
+                </p>
+                <p style="font-size: 13px; color: #4a4a6a; line-height: 1.6; margin-bottom: 20px;">
+                    All your journal entries, mood data, and AI insights will be permanently deleted from MindCare Hub.
+                </p>
+                <div class="form-group">
+                    <label class="form-label">TYPE "DELETE" TO CONFIRM</label>
+                    <input type="text" class="form-input" id="deleteConfirmInput" placeholder="DELETE">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-cancel" id="deleteCancelBtn">Cancel</button>
+                <button class="modal-danger-btn" id="deleteConfirmBtn">Delete My Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="javascript/settings.js"></script>
+</body>
+</html>
